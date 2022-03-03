@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>loop</title>
+    <title>loop</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=El+Messiri&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Syncopate&display=swap" rel="stylesheet">
+    <link href="/css/signUp.css" type="text/css" rel="stylesheet" />
+    <link href="/images/icon.png" rel="icon"/>
+  </head>
+  <body>
+       <div class="signUpInner">
+         <div class="title">
+           <h1>loop</h1>
+           <h2>Create an account</h2>
+         </div>
+         <div class="newAccount">
+            <form method="post" action="/signUp">
+              <input type="text" placeholder="First Name..." name="firstName"/><br />
+              <input type="text" placeholder="Last Name..." name="lastName"/><br />
+              <input type="text" placeholder="User Name..." name="userName"/><br />
+              <input type="email" placeholder="Institute MailID..." name="email"/><br />
+              <input type="password" placeholder="Set a password..." name="password"/><br />
+              <input type="password" placeholder="Re-enter password..." name="rePassword"/><br />
+              <button>Create new account!</button>
+            </form>
+         </div>
+       </div>
+       <div class="pat">
+         <% for(var i = 0; i < 10; i++){ %>
+             <div class="circle"></div>
+         <% } %>
+       </div>
+  </body>
+</html>

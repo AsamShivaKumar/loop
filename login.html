@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <meta name = "viewport" content = "width=device-width" />
+  <title>loop</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=El+Messiri&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
+  <link href="/css/styles.css" type="text/css" rel="stylesheet" />
+  <link href="/images/icon.png" rel="icon"/>
+
+</head>
+<body>
+  <div class="bg">
+    <div class="main">
+      <div class="webSite">
+        <h1>loop</h1>
+      </div>
+      <div class="login">
+        <form method="post" action="/login">
+          <input type="text" placeholder="Email..." name="Email" />
+          <br />
+          <input type="password" placeholder="Password..." name="password" />
+          <br />
+          <a class="loginButton" type="submit" href="/login">Login</a>
+        </form>
+        <hr />
+        <a class="google" name="loginWithGoogle">
+          Login With <i class="fab fa-google"></i>
+        </a>
+        <hr />
+        <div class="signUp">
+          <p>Don't have an account?<br />Create one!</p>
+          <button name="signUp">Sign-up</button>
+        </div>
+      </div>
+    </div>
+  </div>
+<script>
+  document.querySelector(".signUp button").addEventListener("click",function(e){
+    console.log(e);
+    location.href = "/signUp"
+  });
+</script>
+</body>
+
+</html>
