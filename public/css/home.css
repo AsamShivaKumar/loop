@@ -1,0 +1,209 @@
+html,body{
+   margin: 0;
+   padding: 0;
+   color: white;
+   overflow-x: hidden;
+   perspective: 300px;
+}
+
+
+::selection{
+  background-color: #9A0680;
+}
+
+.loop{
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+  background-image: linear-gradient(to bottom,#E900FF,#79018C,#4C0070);   /* #E900FF */
+  /* background-image: url("C:/Users/Shiva Kumar/Downloads/White-Stars-on-transparent-background-PNG.png") */
+}
+
+.sub{
+  font-size: 1.9rem;
+  margin: 0;
+  font-family: 'Supermercado One', cursive;
+}
+
+h1{
+  font-size: 7rem;
+  font-family: 'Comfortaa';
+  margin: 0;
+}
+
+
+.navbar{
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  background-image: linear-gradient(to bottom,#FFD32D,#F1D00A,#FFC900);
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 1;
+  list-style: none;
+  display: flex;
+  top: -150%;
+  font-size: 3rem;
+  margin: 0;
+  font-family: 'El Messiri';
+  transition: all 0.7s;
+  padding: 0;
+}
+.navbar a{
+  text-decoration: none;
+  color: #FFCDDD;
+  margin: 0 5px;
+  border-radius: 20px;
+  padding: 0 10px;
+  font-weight: bold;
+}
+
+.navbar a:hover{
+   color: white;
+}
+
+.navbar .active:hover{
+  color: black;
+}
+
+.active{
+  background-color: white;
+}
+
+.display{
+  top: 0;
+}
+
+.menuButton{
+  cursor: pointer;
+}
+.bar{
+  display: block;
+  width: 45px;
+  height: 5px;
+  margin: 10px 0;
+  border-radius: 5px;
+  position: absolute;
+  background-color: white;
+  z-index: 2;
+  right: 10px;
+  transition: all 0.7s;
+}
+
+.bar:nth-child(2){
+  transform: translateY(11px);
+}
+.bar:nth-child(3){
+  transform: translateY(22px);
+}
+
+.clicked .bar:nth-child(2){
+     opacity: 0;
+}
+.clicked .bar:nth-child(1){
+     transform: translateY(10px) rotate(-45deg);
+}
+.clicked .bar:nth-child(3){
+     transform: translateY(10px) rotate(45deg);
+}
+
+.query, .projects, .blogs{
+  width: 100vw;
+  height: 70vh;
+  display: flex;
+}
+
+.query{
+    background-image: linear-gradient(to right,#2FA4FF,#008E89,#0E185F);
+    transform-style: preserve-3d;
+    position: relative;
+    flex-direction: row;
+    align-items: center;
+}
+
+.descrp{
+  /* position: absolute; */
+  font-size: 2rem;
+  opacity: 0.7;
+  font-family: 'Syne Mono', monospace;
+  transform: translateZ(0);
+  position: relative;
+  left: -40px;
+}
+
+.queryTitle{
+  margin-left: 2%;
+}
+
+.descrp a{
+  text-decoration: none;
+  border-radius: 20px;
+  background-color: white;
+  padding: 3px 10px;
+  position: relative;
+  color: #008E89;
+  top: 20px;
+  transition: all 0.7s;
+  font-family: fantasy;
+}
+
+.descrp a:hover{
+  background-color: #008E89;
+  color: white;
+  border: 1px solid white;
+}
+
+.projects{
+  background-image: linear-gradient(to right,#FFD32D,#F0A500,#D29D2B);
+}
+
+.blogs{
+  background-image: linear-gradient(to left,#00C897,#019267,#064635);
+}
+
+.end{
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  background-image: radial-gradient(circle,#FFD32D,#F1D00A,#FFC900);
+}
+
+.endSign{
+  height: 100vh;
+}
+
+.signDiv{
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  text-align: center;
+}
+
+  /* .one,.two{
+    border-radius: 100%;
+    width: 250px;
+    height: 250px;
+    background-color: black;
+    position: absolute;
+  }
+
+  .two{
+    right: 40px;
+  } */
+
+
+/* scroll bar */
+
+::-webkit-scrollbar{
+  width: 10px;
+  background-color: #BC8CF2;
+}
+
+::-webkit-scrollbar-thumb{
+   background: linear-gradient(to bottom,#203239,#141E27);
+   border-radius: 5px;
+}

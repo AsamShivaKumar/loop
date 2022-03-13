@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width" />
+  <title>loop</title>
+  <link href="/images/icon.png" rel="icon" />
+  <link href="/css/homeStyle.css" rel="stylesheet" type="text/css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- <div class="container"> -->
+    <div class="loader">
+         <div class="one">Hello <br /> <%= userName %>!</div>
+         <div class="two"></div>
+         <div class="three"></div>
+         <div class="four"></div>
+         <div class="five"></div>
+    </div>
+  <!-- </div> -->
+    <script>
+      var x = 100;
+      setInterval(function(){
+        setTimeout(function(){
+          document.querySelector(".two").classList.toggle("twoDis");
+        },x);
+        setTimeout(function(){
+          document.querySelector(".three").classList.toggle("threeDis");
+        },x+150);
+        setTimeout(function(){
+          document.querySelector(".four").classList.toggle("fourDis");
+        },x+450);
+        setTimeout(function(){
+          document.querySelector(".five").classList.toggle("fiveDis");
+        },x+550);
+        x += 600;
+      },800);
+
+      document.onload = function() {alert("Loaded!")};
+
+    </script>
+</body>
+</html>

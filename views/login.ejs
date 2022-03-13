@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="utf-8">
-  <meta name = "viewport" content = "width=device-width" />
+  <meta name="viewport" content="width=device-width" />
   <title>loop</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -11,9 +11,10 @@
   <link href="https://fonts.googleapis.com/css2?family=El+Messiri&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
   <link href="/css/styles.css" type="text/css" rel="stylesheet" />
-  <link href="/images/icon.png" rel="icon"/>
+  <link href="/images/icon.png" rel="icon" />
 
 </head>
+
 <body>
   <div class="bg">
     <div class="main">
@@ -21,17 +22,18 @@
         <h1>loop</h1>
       </div>
       <div class="login">
+        <h2> <%= Message %> </h2>
         <form method="post" action="/login">
-          <input type="text" placeholder="Email..." name="Email" />
+          <input type="text" placeholder="Email..." name="Email" required/>
           <br />
-          <input type="password" placeholder="Password..." name="password" />
+          <input type="password" placeholder="Password..." name="password" required/>
           <br />
-          <a class="loginButton" type="submit" href="/login">Login</a>
+          <button class="loginButton" type="submit">Login</button>
         </form>
-        <hr />
+        <!-- <hr />
         <a class="google" name="loginWithGoogle">
           Login With <i class="fab fa-google"></i>
-        </a>
+        </a> -->
         <hr />
         <div class="signUp">
           <p>Don't have an account?<br />Create one!</p>
@@ -40,12 +42,12 @@
       </div>
     </div>
   </div>
-<script>
-  document.querySelector(".signUp button").addEventListener("click",function(e){
-    console.log(e);
-    location.href = "/signUp"
-  });
-</script>
+  <script>
+    document.querySelector(".signUp button").addEventListener("click", function(e) {
+      console.log(e);
+      location.href = "/signUp"
+    });
+  </script>
 </body>
 
 </html>

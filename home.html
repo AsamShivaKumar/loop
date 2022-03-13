@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>loop</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=El+Messiri&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Supermercado+One&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Syne+Mono&display=swap" rel="stylesheet">
+    <link href="/css/home.css" type="text/css" rel="stylesheet" />
+  </head>
+  <body>
+    <div class="top">
+      <header>
+        <div class="menuButton">
+          <span class="bar"></span>
+          <span class="bar"></span>
+          <span class="bar"></span>
+        </div>
+        <ul class="navbar">
+         <li><a href="#" class="active">Home</a></li>
+         <li><a href="#">Query</a></li>
+         <li><a href="#">Blogs</a></li>
+         <li><a href="#">Projects</a></li>
+         <li><a href="#">Profile</a></li>
+        </ul>
+      </header>
+      <div class="loop">
+        <div>
+          <h1>loop</h1>
+          <h3 class="sub">where ideas meet!</h3>
+        </div>
+      </div>
+    </div>
+     <div class="query">
+         <div class="queryTitle">
+           <h1>Query Page</h1>
+         </div>
+         <div class="descrp">
+           Post questions related to literally anything.<br />
+           Answer ques posted by other Users.<br />
+           Tag the people from whom you want to get answers from <br />
+           Follow the people, topics you are interested in!<br />
+           <a href="/query">Query</a>
+         </div>
+     </div>
+     <div class="blogs">
+          <h1>Blogs</h1>
+     </div>
+     <div class="projects">
+         <h1>Projects</h1>
+     </div>
+     <div class="end">
+        <div class="signDiv">
+             <img src="/images/signOfHorns.png" class="endSign"/>
+        </div>
+        <div class="one">
+
+        </div>
+        <div class="two">
+
+        </div>
+     </div>
+     <script type="text/javascript">
+            document.querySelector(".menuButton").addEventListener("click", clicked);
+
+            function clicked(){
+                     document.querySelector(".menuButton").classList.toggle("clicked");
+                     document.querySelector(".navbar").classList.toggle("display");
+            }
+     </script>
+  </body>
+</html>

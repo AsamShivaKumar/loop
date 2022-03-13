@@ -31,6 +31,9 @@ h1{
   color: white;
 }
 
+h2{
+  color: white;
+}
 .bg{
   background-image: url("/images/noPat.png") /* no-repeat center center fixed */;
   background-repeat: no-repeat;
@@ -145,69 +148,6 @@ input::placeholder{
 .signUp button:hover{
    background-color: #E8E8A6;
    color: #FF4D00;
-}
-
-/* Sign-Up page */
-
-.title{
-    position: relative;
-    top: 100px;
-    left: 80px;
-}
-
-.signUpBg{
-  --input-color: #D9B6B6;
-  background-image: url('/images/signUp.png');
-  background-repeat: no-repeat;
-  background-size: cover;
-  /* height: 721px; */
-}
-
-.signUpInner{
-  height: 721px;
-}
-
-.newAccount{
-  position: absolute;
-  bottom: 19%;
-  left: 60%;
-}
-
-.newAccount input{
-  border-radius: 5px;
-  opacity: 0.7;
-  margin-bottom: 15px;
-}
-
-.title h2{
-  color: white;
-  font-size: 5rem;
-  width: 500px;
-  font-family: 'Syncopate', sans-serif;
-}
-
-.title h1{
-  opacity: 0.7;
-}
-
-.newAccount button{
-  font-size: 1.4rem;
-  border: 0;
-  border-radius: 5px;
-  height: 50px;
-  color: #1A1A40;
-  background-color: #92A9BD;
-  transition: all 1s;
-}
-
-.newAccount button:hover{
-  background-color: #166892;
-  color: #1A1A40;
-  cursor: pointer;
-}
-
-.newAccount button:active{
-  background-color: #E60965;
 }
 
 @media only screen and (max-width: 1000px){
