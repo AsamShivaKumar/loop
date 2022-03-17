@@ -39,7 +39,11 @@ const userSchema = new mongoose.Schema({
       userName: String,
       mail: String,
       passHash: String,
-      active: Boolean
+      avatar: {type: Number, default: 6},
+      active: Boolean,
+      following: [String],       //user names of the followees
+      queries: [mongoose.ObjectId],       // ids of the queries posted by the userID
+      saved: [mongoose.ObjectId]          // ids of the queries saved by the user
 });
 
 
@@ -48,16 +52,32 @@ const tokenSchema = new mongoose.Schema({
       authCode: String,
 });
 
+const answerSchema = new mongoose.Schema({
+      by: String,             // user name
+      mail: String,           //user MailID
+      answer: String,         // answer
+      likes: Number,          // like-count
+      comments: [String]      //comments
+});
+
+const querySchema = new mongoose.Schema({
+      postedBy: String,         //user name
+      mail: String,             // user MailID
+      que: String,              // question
+      answers: [answerSchema]   // array of answers
+});
+
 const User = new mongoose.model("User",userSchema);
 const Token = new mongoose.model("Token",tokenSchema);
+const Answer = new mongoose.model("Answer",answerSchema);
+const Query = new mongoose.model("Query",querySchema);
 
 // login page
 app.get("/", function(req,res){
     // console.log(req.cookies);
-  if(req.cookies.session_id){
+  if(req.cookies.user){
     console.log("Logged in!");
-    // res.render("home",{userName: req.cookies.user_name});
-    res.sendFile(__dirname + "/home.html");
+    res.render("home",{userName: req.cookies.user.userName});
   }else{
     res.render("login", {Message: ""});
   }
@@ -74,15 +94,16 @@ app.post("/login",function(req,res){
                   res.render("login", {Message: "Try again"});
                 }else if(result) {
                   var mail = req.body.Email;
-                  res.cookie("session_id", mail);
-                  res.cookie("user_name", user.userName);
-                  res.sendFile(__dirname + "/home.html");
+                  res.cookie("user", user);
+                  res.render("home",{userName: user.userName});
                 }else{
                   res.render("login", {Message: "Incorrect Password!"});
                 }
          });
     });
 });
+
+//$2b$10$zS9A5hZMDrmliPDyxMQ82eB1eSLCVey80TU4yEpCu3JvctVqyDBQu
 
 // SignUp page
 
@@ -154,6 +175,13 @@ app.post("/auth/:userId",function(req,res){
               res.render("signUp", {message: "SignUp falied. Try again!"});
            }
     });
+});
+
+
+// query Page
+
+app.get("/query",function(req,res){
+    res.render("query",{});
 });
 
 app.listen("3000",function(){

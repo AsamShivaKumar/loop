@@ -1,5 +1,5 @@
 
-html,body{
+*{
   padding: 0;
   margin: 0;
 }
@@ -8,7 +8,70 @@ body{
   background-image: linear-gradient(to top,#FFCDDD,#EA99D5,#B762C1,#8946A6);
   width: 100vw;
   height: 100vh;
+  font-family: 'Nunito', sans-serif;
   /* background-image: linear-gradient(to bottom,#E900FF,#79018C,#4C0070); */
+}
+
+.queryPost{
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  margin: 50px 0 0 320px;
+  box-shadow: 10px 10px 30px #4C0070;
+}
+
+.que{
+  border-radius: 10px 10px 0 0;
+  position: relative;
+  width: 70vw;
+  background-image: linear-gradient(to bottom,#FFCDDD,#EA99D5);
+  color: #79018C;
+  font-size: 1.4rem;
+  text-align: center;
+  padding: 10px 10px;
+}
+
+.follow{
+  background-color: #79018C;
+  border-width: 0;
+  font-size: 2rem;
+  padding: 0 9px;
+  border-radius: 100%;
+  position: absolute;
+  right: 5px;
+  bottom: 5px;
+  cursor: pointer;
+  pointer-events: auto;
+}
+
+.postedBy{
+  display: flex;
+  flex-direction: row;
+  font-size: 1rem;
+}
+
+.avatar{
+  border-radius: 100%;
+  width: 50px;
+  height: 50px;
+}
+
+.userData{
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  height: 50px;
+  justify-content: center;
+}
+
+.answers{
+  background-color: #8946A6;
+  color: #FFCDDD;
+  width: 70vw;
+  font-size: 1.4rem;
+  text-align: left;
+  padding: 10px 10px;
+  white-space: pre-line;
 }
 
 .sideBar{
