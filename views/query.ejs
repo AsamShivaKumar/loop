@@ -3,18 +3,40 @@
 
 <head>
   <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width" />
   <title>loop</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Righteous&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;600&display=swap" rel="stylesheet">
+  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>
   <link href="/css/query.css" rel="stylesheet" type="text/css" />
+  <link href="/css/navbar.css" rel="stylesheet" type="text/css" />
 </head>
 
 <body>
+  <div class="menuButton">
+    <span class="bar"></span>
+    <span class="bar"></span>
+    <span class="bar"></span>
+  </div>
+  <ul class="navbar">
+   <li><a href="/home">Home</a></li>
+   <li><a href="/#" class="active">Query</a></li>
+   <li><a href="/blogs">Blogs</a></li>
+   <li><a href="/projects">Projects</a></li>
+   <li><a href="/profile">Profile</a></li>
+  </ul>
   <div class="side">
     <div class="sideBar">
       <h1>Query</h1>
+      <div class="user">
+        <img class="avatar" src=<%= avatar %> alt="Avatar" title="avatar" />
+        <h2> <%= user.userName %> </h2>
+        <a href="#" class="postQue" name = <%= user.userName %> >Post a question</a>
+        <a class="following" href="#" name = <%= user.userName %> >Following</a>
+      </div>
     </div>
     <button class="sideBarButton"><span>▶</span></button>
   </div>
@@ -40,12 +62,15 @@
 
             However, I do have a slightly different idea about loud sounds and corresponding sound makers. It goes with this rank:
           </p>
-          <div class="postedBy">
-            <img class="avatar" src="/images/avatars/6.png" />
-            <div class="userData">
-              <p>Username</p>
-              <p>MailID</p>
+          <div class="likep">
+            <div class="postedBy">
+              <img class="avatar" src="/images/avatars/6.png" />
+              <div class="userData">
+                <p>Username</p>
+                <p>MailID</p>
+              </div>
             </div>
+            <i class='fa fa-heart'></i> 56
           </div>
         </div>
         <div class="answer">
@@ -56,12 +81,15 @@
 
             However, I do have a slightly different idea about loud sounds and corresponding sound makers. It goes with this rank:
           </p>
-          <div class="postedBy">
-            <img class="avatar" src="/images/avatars/6.png" />
-            <div class="userData">
-              <p>Username</p>
-              <p>MailID</p>
+          <div class="likep">
+            <div class="postedBy">
+              <img class="avatar" src="/images/avatars/6.png" />
+              <div class="userData">
+                <p>Username</p>
+                <p>MailID</p>
+              </div>
             </div>
+            <i class='fa fa-heart'></i> 82
           </div>
         </div>
       </div>
@@ -72,14 +100,24 @@
   </div>
 
   <script ty(pe="text/javascript">
-      document.querySelector(".sideBarButton").addEventListener("click",function(){
-              document.querySelector(".sideBar").classList.toggle("click");
-              var btn = document.querySelector(".sideBarButton");
-              btn.classList.toggle("click");
-              console.log(btn.innerHTML);
-              if(btn.innerHTML == "<span>▶</span>") btn.innerHTML = "<span>◀</span>"
-              else btn.innerHTML = "<span>▶</span>"
-      });
+    document.querySelector(".sideBarButton").addEventListener("click", function() {
+      document.querySelector(".sideBar").classList.toggle("click");
+      var btn = document.querySelector(".sideBarButton");
+      btn.classList.toggle("click");
+
+      if (btn.innerHTML == "<span>▶</span>") btn.innerHTML = "<span>◀</span>"
+      else btn.innerHTML = "<span>▶</span>"
+    });
+    document.querySelector(".menuButton").addEventListener("click", clicked);
+
+    function clicked(){
+             document.querySelector(".menuButton").classList.toggle("clicked");
+             document.querySelector(".navbar").classList.toggle("display");
+             document.querySelector(".sideBar").classList.toggle("hide");
+             var buttn = document.querySelector(".sideBarButton");
+             if(buttn.style.display === "none") buttn.style.display = "block";
+             else buttn.style.display = "none";
+    }
   </script>
 </body>
 

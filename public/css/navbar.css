@@ -1,0 +1,75 @@
+
+.navbar{
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  background-image: linear-gradient(to bottom,#FFD32D,#F1D00A,#FFC900);
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 1;
+  list-style: none;
+  display: flex;
+  top: -150%;
+  font-size: 3rem;
+  margin: 0;
+  font-family: 'El Messiri';
+  transition: all 0.7s;
+  padding: 0;
+}
+.navbar a{
+  text-decoration: none;
+  color: #FFCDDD;
+  margin: 0 5px;
+  border-radius: 20px;
+  padding: 0 10px;
+  font-weight: bold;
+}
+.navbar a:hover{
+   color: white;
+}
+
+.navbar .active:hover{
+  color: black;
+}
+
+.active{
+  background-color: white;
+}
+
+.display{
+  top: 0;
+}
+
+.menuButton{
+  cursor: pointer;
+}
+.bar{
+  display: block;
+  width: 45px;
+  height: 5px;
+  margin: 10px 0;
+  border-radius: 5px;
+  position: absolute;
+  background-color: white;
+  z-index: 2;
+  right: 10px;
+  transition: all 0.7s;
+}
+
+.bar:nth-child(2){
+  transform: translateY(11px);
+}
+.bar:nth-child(3){
+  transform: translateY(22px);
+}
+
+.clicked .bar:nth-child(2){
+     opacity: 0;
+}
+.clicked .bar:nth-child(1){
+     transform: translateY(10px) rotate(-45deg);
+}
+.clicked .bar:nth-child(3){
+     transform: translateY(10px) rotate(45deg);
+}

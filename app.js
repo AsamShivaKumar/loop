@@ -55,6 +55,7 @@ const tokenSchema = new mongoose.Schema({
 const answerSchema = new mongoose.Schema({
       by: String,             // user name
       mail: String,           //user MailID
+      avatar: Number,         //usre avatar
       answer: String,         // answer
       likes: Number,          // like-count
       comments: [String]      //comments
@@ -63,6 +64,7 @@ const answerSchema = new mongoose.Schema({
 const querySchema = new mongoose.Schema({
       postedBy: String,         //user name
       mail: String,             // user MailID
+      avatar: Number,
       que: String,              // question
       answers: [answerSchema]   // array of answers
 });
@@ -181,7 +183,20 @@ app.post("/auth/:userId",function(req,res){
 // query Page
 
 app.get("/query",function(req,res){
-    res.render("query",{});
+
+    Query.find({},{limit: 10}, function(err, queries){
+          if(!err) console.log(queries);
+    });
+
+    var avatar = "/images/avatars/" + req.cookies.user.avatar + ".png"
+
+    res.render("query",{user: req.cookies.user, avatar: avatar });
+});
+
+app.get("/home",function(req,res){
+     if(req.cookies.user){
+       res.render("home",{userName: req.cookies.user.userName});
+     }
 });
 
 app.listen("3000",function(){
