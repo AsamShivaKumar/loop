@@ -73,3 +73,9 @@
 .clicked .bar:nth-child(3){
      transform: translateY(10px) rotate(45deg);
 }
+
+@media only screen and (max-width: 500px){
+      .navbar{
+        font-size: 2.5rem;
+      }
+}

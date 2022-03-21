@@ -18,6 +18,33 @@ body{
   text-align: left;
 }
 
+.searchBar{
+   padding: 10px 0;
+}
+
+.searchBar input{
+   font-size: 1rem;
+   padding: 3px 10px;
+   background-color: #B667F1;
+   border: 0;
+}
+
+.searchBar input::placeholder{
+  color: #533535;
+}
+
+.searchBar button{
+  font-size: 1rem;
+  padding: 3px 3px;
+  border: 0;
+  cursor: pointer;
+  background-color: #FDEBF7;
+}
+
+.searchBar button:hover{
+  background-color: #FBCAFF;
+}
+
 .hiddenInput{
   display: none;
 }
@@ -121,6 +148,19 @@ body{
 .likep i{
   font-size: 2rem;
   margin-left: 10px;
+  cursor: pointer;
+  /* border: 1px solid white; */
+  color: #8946A6;
+  filter: drop-shadow(2px 2px 1px white);
+}
+
+.likep i:hover{
+  color: #B762C1;
+}
+
+.like{
+  color: white;
+  filter: none;
 }
 
 .queryPost{
@@ -368,8 +408,13 @@ textarea{
        }
 }
 
-/* scroll bar */
+@media only screen and (max-height: 385px){
+       .sideBar{
+           overflow-y: scroll;
+       }
+}
 
+/* scroll bar */
 ::-webkit-scrollbar{
   width: 10px;
   background-color: #BC8CF2;

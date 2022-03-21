@@ -44,3 +44,12 @@ document.querySelectorAll(".answerQuery").forEach(function(ans){
 document.querySelectorAll(".close")[1].addEventListener("click", function(){
          document.querySelector(".newAnswer").classList.remove("open");
 });
+
+// updating likes
+
+document.querySelectorAll(".likep i").forEach(function(like){
+         like.addEventListener("click", function(evt){
+              like.style.color = "white";
+              like.style.filter = "none";
+         });
+});

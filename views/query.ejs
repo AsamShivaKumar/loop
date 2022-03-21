@@ -10,6 +10,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Righteous&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=El+Messiri&display=swap" rel="stylesheet">
   <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>
   <link href="/css/query.css" rel="stylesheet" type="text/css" />
   <link href="/css/navbar.css" rel="stylesheet" type="text/css" />
@@ -36,6 +37,10 @@
         <h2> <%= user.userName %> </h2>
         <button class="postQue" name=<%= user.userName %>>Post a question</button>
         <a class="following" href="#" name=<%= user.userName %>>Following</a>
+        <div class="searchBar">
+          <input type="text" placeholder="Search users here..."/>
+          <button type="submit">Search</button>
+        </div>
       </div>
     </div>
     <button class="sideBarButton"><span>▶</span></button>
