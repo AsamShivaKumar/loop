@@ -1,10 +1,9 @@
 html,body{
-  height: 100%;
-  width: 100%;
   margin: 0;
   overflow-x: hidden;
   padding: 0;
-  min-height: 100%;
+  height: 100vh;
+  width: 100vw;
   background-color: #FF4D00;
   /* overflow-y: hidden; */
 }
@@ -25,7 +24,8 @@ button{
 }
 
 h1{
-  margin: 0;
+  margin-top: 30vh;
+  margin-left: 5vw;
   font-family: Comfortaa, cursive;
   font-size: var(--heading-size);
   color: white;
@@ -35,24 +35,21 @@ h2{
   color: white;
 }
 .bg{
-  background-image: url("/images/noPat.png") /* no-repeat center center fixed */;
+  background-image: url("/images/noPat.png");
   background-repeat: no-repeat;
   background-size: cover;
-  height: 100%;
-  width: 100%;
+  height: 100vh;
+  width: 100vw;
 }
 
 .main{
   display: flex;
-  /* flex-direction: column-reverse; */
   position: relative;
-  top: 30%;
-  left: 10%;
 }
 
 .login{
-  position: absolute;
-  right: 300px;
+  margin-left: 42vw;
+  margin-top: 30vh;
 }
 
 input{
@@ -66,7 +63,6 @@ input{
   color: white;
   padding: 0;
   border-width: 0;
-  /* border-left-width: 20px; */
   border-left-color: var(--input-color);
   border-color: var(--input-color);
   border-style: solid;
@@ -100,28 +96,6 @@ input::placeholder{
   background-color: #FF4D00;
 }
 
-.google{
-    display: inline-block;
-    text-align: center;
-    font-size: 2rem;
-    width: 300px;
-    height: 50px;
-    border-radius: 5px;
-    border: 1px solid #E8E8A6;
-    background-color: #E8E8A6;
-    color: white;
-    font-family: 'El Messiri', sans-serif;
-    cursor: pointer;
-    padding: 10px 10px;
-    color: #FF4D00;
-    transition: all 1s;
-}
-
-.google:hover{
-   background-color: #FF4D00;
-   color: #E8E8A6;
-}
-
 .signUp{
   display: flex;
   color: white;
@@ -150,101 +124,79 @@ input::placeholder{
    color: #FF4D00;
 }
 
+@media only screen and  (max-width: 1350px){
+     .login{
+       margin-left: 30vw;
+     }
+}
+
+@media only screen and  (max-width: 1070px){
+     .login{
+       margin-left: 25vw;
+     }
+}
+
 @media only screen and (max-width: 1000px){
-       .main{
-         --heading-size: 8rem;
-         --input-size: 1rem;
-         --login-font: 1.2rem;
+
+       .login{
+         margin-left: 10%;
+       }
+
+       h1{
+         font-size: 7rem;
        }
 
        input{
-          height: 2.6rem;
-          width: 230px;
-          font-size: var(--input-size);
-       }
-
-       .loginButton{
-          display: inline-block;
-          text-align: center;
-          text-decoration: none;
-          font-size: var(--login-font);
-          padding: 3px 10px;
-          border-radius: 5px;
-          border: 1px solid white;
-          width: 90px;
-          height: 30px;
-       }
-       .google{
-           font-size: 1.6rem;
-           width: 220px;
-           height: 30px;
-       }
-
-       hr{
-         visibility: hidden;
+         font-size: 1rem;
+         width: 250px;
+         height: 50px;
        }
 
        .signUp button{
-           border-radius: 19px;
-           border-width: 0.2px;
-           font-size: 1rem;
-           height: 30px;
-           width: 80px;
-           margin-top: 10px;
-           /* position: absolute; */
-           /* top: 10px; */
-       }
-
-       .login{
-          right: 100px;
+         margin-left: auto;
        }
 }
 
-@media only screen and (max-width: 640px){
-        .main{
-          --heading-size: 6rem;
-        }
-
-       .login{
-         position: absolute;
-         top: 200px;
-         right: 0;
-         left: 5%;
-       }
-}
-
-@media only screen and (max-width: 305px){
-      .main{
-        --input-size: 0.75rem;
-        --login-font: 1rem;
+@media only screen and (max-width: 650px){
+      input{
+        font-size: 0.8rem;
+        width: 150px;
+        height: 30px;
       }
-     .login{
-        position: absolute;
-        left: 0.1%;
-     }
-     input{
-        height: 2.3rem;
-        width: 200px;
-     }
 
       .loginButton{
-        width: 70px;
-        height: 20px;
-     }
-     .google{
-         font-size: 1.3rem;
-         width: 170px;
-         height: 20px;
-     }
+        width: 100px;
+        height: 30px;
+        font-size: 1rem;
+      }
 
-     .signUp button{
-         font-size: 0.6rem;
-         height: 20px;
-         width: 50px;
-         position: relative;
-         right: 10px;
-     }
-     .signUp p{
-       font-size: 1rem;
-     }
+      .signUp button{
+        font-size: 1rem;
+        height: 30px;
+        width: 80px;
+        margin: -20px 0;
+      }
+
+      .signUp{
+        flex-direction: column;
+      }
+
+}
+
+@media only screen and (max-width: 505px){
+       .main{
+         flex-direction: column;
+       }
+       .login{
+         margin-top: -20vh;
+       }
+       h1{
+         margin-top: 0;
+       }
+}
+
+@media only screen and (max-height: 350px){
+       .bg{
+         background: transparent;
+       }
 }

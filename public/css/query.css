@@ -13,10 +13,51 @@ body{
   overflow-x: hidden;
 }
 
+.question{
+  white-space: pre-wrap;
+  text-align: left;
+}
+
+.searchBar{
+   padding: 10px 0;
+}
+
+.searchBar input{
+   font-size: 1rem;
+   padding: 3px 10px;
+   background-color: #B667F1;
+   border: 0;
+}
+
+.searchBar input::placeholder{
+  color: #533535;
+}
+
+.searchBar button{
+  font-size: 1rem;
+  padding: 3px 3px;
+  border: 0;
+  cursor: pointer;
+  background-color: #FDEBF7;
+}
+
+.searchBar button:hover{
+  background-color: #FBCAFF;
+}
+
+.hiddenInput{
+  display: none;
+}
+
+.posts{
+  display: flex;
+  flex-direction: column;
+}
+
 .queryPost{
   display: flex;
   flex-direction: column;
-  position: absolute;
+  width: calc(55vw + 250px);
   margin: 50px 0 0 320px;
   box-shadow: 10px 10px 30px #4C0070;
   overflow-x: hidden;
@@ -38,11 +79,33 @@ body{
   font-size: 2rem;
   padding: 0 9px;
   border-radius: 100%;
-  position: absolute;
+  /* position: absolute;
   right: 5px;
-  bottom: 5px;
+  bottom: 5px; */
   cursor: pointer;
   pointer-events: auto;
+}
+
+.follow.saved{
+  background: white;
+}
+
+.answerQuery{
+  display: inline-block;
+  font-size: 1.4rem;
+  border: 1px solid #8946A6;
+  border-radius: 5px;
+  padding: 5px 0;
+  background-color: #FFCDDD;
+  width: 45vw;
+  color: #8946A6;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.answerQuery:hover{
+  background-color: #FFBDE6;
+  text-decoration: underline;
 }
 
 .postedBy{
@@ -89,6 +152,26 @@ body{
 .likep i{
   font-size: 2rem;
   margin-left: 10px;
+  cursor: pointer;
+}
+
+.unliked{
+  color: #8946A6;
+  filter: drop-shadow(2px 2px 1px white);
+}
+
+.liked{
+  color: white;
+  filter: none;
+}
+
+.likep i:hover{
+  color: #B762C1;
+}
+
+.like{
+  color: white;
+  filter: none;
 }
 
 .queryPost{
@@ -115,7 +198,6 @@ body{
   background-color: #FFCDDD;
   box-shadow: 10px 10px 100px #8946A6;
   transition: all 0.4s;
-  z-index: 1;
 }
 
 .sideBar h1{
@@ -190,7 +272,7 @@ body{
   left: -100%;
   cursor: pointer;
   box-shadow: 1px 5px 10px black;
-  z-index: 1;
+  z-index: 2;
   transition: all 0.4s;
 }
 
@@ -215,13 +297,93 @@ body{
   width: 0;
 }
 
+.answer p{
+  white-space: pre-wrap;
+}
+
 .hide{
   display: none;
+}
+
+.newPost,.newAnswer{
+  position: absolute;
+  width: 0;
+  height: 0;
+  background-image: linear-gradient(to top,#FFDDEE,#FFBDE6);
+  border-radius: 10px;
+  z-index: 2;
+  left: 10vw;
+  top: 10vh;
+  transition: all 0.5s;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+}
+
+textarea{
+  resize: none;
+  white-space: pre-wrap;  /* to treat white spaces and line breaks as entered by the user */
+  padding: 5px 10px;
+}
+
+.textNewPost,.textNewAnswer{
+  border-radius: 5px;
+  width: 70vw;
+  height: 60vh;
+  background-color: #F3E9DD;
+  font-size: 1rem;
+  color: #FF5C8D;
+}
+
+.newPost button, .newAnswer button{
+  font-size: 1.2rem;
+  color: grey;
+  padding: 5px 20px;
+  border-radius: 10px;
+  border: 3px solid grey;
+  background: #F3E9DD;
+  position: absolute;
+  left: 80px;
+  bottom: 20px;
+  cursor: pointer;
+}
+
+.open{
+  width: 80vw;
+  height: 80vh;
+  border: 1px solid white;
+}
+
+.close span{
+       width: 40px;
+       height: 5px;
+       border-radius: 10px;
+       background-color: #534340;
+       z-index: 2;
+       display: block;
+       right: 5px;
+       top: 20px;
+       position: absolute;
+       transition: all 0.5s;
+}
+.close{
+  cursor: pointer;
+}
+
+.close span:nth-child(1){
+     transform: rotate(45deg);
+}
+
+.close span:nth-child(2){
+     transform: rotate(-45deg);
 }
 
 @media only screen and (max-width: 1300px){
        .sideBar{
          left: -100%;
+         z-index: 1;
        }
 
        .sideBarButton{
@@ -244,9 +406,33 @@ body{
 @media only screen and (max-width: 771px){
        .queryPost{
          flex-direction: column;
+         width: calc(80vw + 20px);
+         margin: 50px 10vw 0 10vw;
        }
        .que, .answers, .comments{
          width: 80vw;
          border-radius: 0;
        }
+
+       .comments{
+         padding: 10px;
+       }
+}
+
+@media only screen and (max-height: 385px){
+       .sideBar{
+           overflow-y: scroll;
+       }
+}
+
+/* scroll bar */
+::-webkit-scrollbar{
+  width: 10px;
+  background-color: #BC8CF2;
+}
+
+::-webkit-scrollbar-thumb{
+   background: linear-gradient(to bottom,#203239,#141E27);
+   border-radius: 5px;
+   cursor: pointer;
 }

@@ -10,6 +10,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Righteous&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=El+Messiri&display=swap" rel="stylesheet">
   <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>
   <link href="/css/query.css" rel="stylesheet" type="text/css" />
   <link href="/css/navbar.css" rel="stylesheet" type="text/css" />
@@ -22,11 +23,11 @@
     <span class="bar"></span>
   </div>
   <ul class="navbar">
-   <li><a href="/home">Home</a></li>
-   <li><a href="/#" class="active">Query</a></li>
-   <li><a href="/blogs">Blogs</a></li>
-   <li><a href="/projects">Projects</a></li>
-   <li><a href="/profile">Profile</a></li>
+    <li><a href="/home">Home</a></li>
+    <li><a href="/#" class="active">Query</a></li>
+    <li><a href="/blogs">Blogs</a></li>
+    <li><a href="/projects">Projects</a></li>
+    <li><a href="/profile">Profile</a></li>
   </ul>
   <div class="side">
     <div class="sideBar">
@@ -34,91 +35,86 @@
       <div class="user">
         <img class="avatar" src=<%= avatar %> alt="Avatar" title="avatar" />
         <h2> <%= user.userName %> </h2>
-        <a href="#" class="postQue" name = <%= user.userName %> >Post a question</a>
-        <a class="following" href="#" name = <%= user.userName %> >Following</a>
+        <button class="postQue" name=<%= user.userName %>>Post a question</button>
+        <a class="following" href="#" name=<%= user.userName %>>Following</a>
+        <div class="searchBar">
+          <input type="text" placeholder="Search users here..."/>
+          <button type="submit">Search</button>
+        </div>
       </div>
     </div>
     <button class="sideBarButton"><span>▶</span></button>
   </div>
-  <div class="queryPost">
-    <div class="queNans">
-      <div class="que">
-        What is the loudest sound on earth?
-        <div class="postedBy">
-          <img class="avatar" src="/images/avatars/1.png" />
-          <div class="userData">
-            <p>Username</p>
-            <p>MailID</p>
-          </div>
-        </div>
-        <button class="follow" title="Save Post">+</button>
-      </div>
-      <div class="answers">
-        <div class="answer">
-          <p>
-            Good question.
-
-            Some may answer “an eruption”, some may say “a bomb”, and the like. They all sound reasonable (no pun intended).
-
-            However, I do have a slightly different idea about loud sounds and corresponding sound makers. It goes with this rank:
-          </p>
-          <div class="likep">
-            <div class="postedBy">
-              <img class="avatar" src="/images/avatars/6.png" />
-              <div class="userData">
-                <p>Username</p>
-                <p>MailID</p>
-              </div>
-            </div>
-            <i class='fa fa-heart'></i> 56
-          </div>
-        </div>
-        <div class="answer">
-          <p>
-            Good question.
-
-            Some may answer “an eruption”, some may say “a bomb”, and the like. They all sound reasonable (no pun intended).
-
-            However, I do have a slightly different idea about loud sounds and corresponding sound makers. It goes with this rank:
-          </p>
-          <div class="likep">
-            <div class="postedBy">
-              <img class="avatar" src="/images/avatars/6.png" />
-              <div class="userData">
-                <p>Username</p>
-                <p>MailID</p>
-              </div>
-            </div>
-            <i class='fa fa-heart'></i> 82
-          </div>
-        </div>
-      </div>
+  <div class="newPost">
+    <div class="close">
+      <span></span>
+      <span></span>
     </div>
-    <div class="comments">
-      <h1>Comments</h1>
-    </div>
+    <form method="post" action="/newPost">
+      <textarea name="question" class="textNewPost" placeholder="Question....."></textarea>
+      <button type="submit">Post</button>
+    </form>
   </div>
-
-  <script ty(pe="text/javascript">
-    document.querySelector(".sideBarButton").addEventListener("click", function() {
-      document.querySelector(".sideBar").classList.toggle("click");
-      var btn = document.querySelector(".sideBarButton");
-      btn.classList.toggle("click");
-
-      if (btn.innerHTML == "<span>▶</span>") btn.innerHTML = "<span>◀</span>"
-      else btn.innerHTML = "<span>▶</span>"
-    });
-    document.querySelector(".menuButton").addEventListener("click", clicked);
-
-    function clicked(){
-             document.querySelector(".menuButton").classList.toggle("clicked");
-             document.querySelector(".navbar").classList.toggle("display");
-             document.querySelector(".sideBar").classList.toggle("hide");
-             var buttn = document.querySelector(".sideBarButton");
-             if(buttn.style.display === "none") buttn.style.display = "block";
-             else buttn.style.display = "none";
-    }
-  </script>
+  <div class="posts">
+    <% for(var i = 0; i < queries.length; i++){ %>
+    <div class="queryPost">
+      <div class="queNans">
+        <div class="que">
+          <div class="question"><%= queries[i].que %></div>
+          <div class="postedBy">
+            <img class="avatar" src=<%= "/images/avatars/" + queries[i].avatar + ".png" %> />
+            <div class="userData">
+              <p> <%= queries[i].postedBy %> </p>
+              <p> <%= queries[i].mail %> </p>
+            </div>
+          </div>
+          <% if(user.saved.indexOf(queries[i]._id.toString()) === -1) { %>
+              <button class="follow" title="Save Post">+</button>
+          <% } else { %>
+              <button class="follow saved" title="Saved">+</button>
+          <% } %>
+          <buton class="answerQuery" href="/answerQuery" name=<%= queries[i]._id %> >Answer <i class="fa fa-pencil" aria-hidden="true"></i></button>
+        </div>
+        <div class="answers">
+          <% for(var j = 0; j < queries[i].answers.length; j++ ) { %>
+          <div class="answer">
+            <p> <%= queries[i].answers[j].answer %> </p>
+            <div class="likep" name= <%= queries[i]._id %> >
+              <div class="postedBy">
+                <img class="avatar" src= <%= "/images/avatars/" + queries[i].answers[j].avatar + ".png" %> />
+                <div class="userData">
+                  <p> <%= queries[i].answers[j].by %> </p>
+                  <p> <%= queries[i].answers[j].mail %> </p>
+                </div>
+              </div>
+              <% if(user.likedPosts.indexOf(queries[i].answers[j]._id.toString()) === -1){ %>
+                 <i class='fa fa-heart unliked' style="margin-right: 5px" name= <%= queries[i].answers[j]._id %> ></i><span class="numLikes"><%= queries[i].answers[j].likes %></span>
+              <% } else { %>
+                <i class='fa fa-heart liked' style="margin-right: 5px" name= <%= queries[i].answers[j]._id %> ></i><span class="numLikes"><%= queries[i].answers[j].likes %></span>
+              <% } %>
+            </div>
+          </div>
+          <% } %>
+        </div>
+      </div>
+      <div class="comments">
+        <h1>Comments</h1>
+      </div>
+    </div>
+    <% } %>
+  </div>
+  <div class="newAnswer">
+    <div class="close">
+      <span></span>
+      <span></span>
+    </div>
+    <form method="post" action="/newAnswer">
+      <input class="hiddenInput" name="queID" />
+      <textarea class="textNewAnswer" placeholder="Answer....." name="newAnswer"></textarea>
+      <button type="submit">Post</button>
+    </form>
+  </div>
 </body>
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script type="text/javascript" src="/query.js"></script>
 </html>
