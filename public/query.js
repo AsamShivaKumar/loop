@@ -47,9 +47,45 @@ document.querySelectorAll(".close")[1].addEventListener("click", function(){
 
 // updating likes
 
-document.querySelectorAll(".likep i").forEach(function(like){
-         like.addEventListener("click", function(evt){
-              like.style.color = "white";
-              like.style.filter = "none";
+var likes = document.querySelectorAll(".likep i");
+for(let i = 0; i < likes.length; i++){
+    likes[i].addEventListener("click", function(evt){
+         var req;
+         var que = document.querySelectorAll(".likep")[i].getAttribute("name");
+         if(likes[i].classList[2] === "liked"){
+            req = { id: evt.target.getAttribute("name"), like: "true", queID: que};
+         }else{
+            req = { id: evt.target.getAttribute("name"), like: "false", queID: que};
+         }
+         likes[i].classList.toggle("unliked");
+         likes[i].classList.toggle("liked");
+         $.post("/like", req, function(res,status){
+              if(res.likeCount != -1) document.querySelectorAll(".numLikes")[i].innerHTML = res.likeCount;
          });
-});
+    });
+}
+
+// saving & deleting posts
+var add = document.querySelectorAll(".follow");
+var ques  = document.querySelectorAll(".answerQuery");
+
+for(var i = 0; i < add.length; i++){
+    const queID = {id: ques[i].getAttribute("name")};
+    add[i].addEventListener("click",function(evt){
+           if(evt.target.getAttribute("title") === "Save Post"){
+                  $.post("/savePost",queID,function(res,status){
+                    if(res){
+                      evt.target.classList.add("saved");
+                      evt.target.setAttribute("title","Saved");
+                    }
+                  });
+           }else{
+             $.post("/deleteFromSaved",queID,function(res,status){
+               if(res){
+                 evt.target.classList.remove("saved");
+                 evt.target.setAttribute("title","Save Post");
+               }
+             });
+           }
+    });
+}

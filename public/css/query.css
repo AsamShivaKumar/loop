@@ -79,11 +79,15 @@ body{
   font-size: 2rem;
   padding: 0 9px;
   border-radius: 100%;
-  position: absolute;
+  /* position: absolute;
   right: 5px;
-  bottom: 5px;
+  bottom: 5px; */
   cursor: pointer;
   pointer-events: auto;
+}
+
+.follow.saved{
+  background: white;
 }
 
 .answerQuery{
@@ -149,9 +153,16 @@ body{
   font-size: 2rem;
   margin-left: 10px;
   cursor: pointer;
-  /* border: 1px solid white; */
+}
+
+.unliked{
   color: #8946A6;
   filter: drop-shadow(2px 2px 1px white);
+}
+
+.liked{
+  color: white;
+  filter: none;
 }
 
 .likep i:hover{

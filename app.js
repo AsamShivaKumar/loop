@@ -43,7 +43,8 @@ const userSchema = new mongoose.Schema({
       active: Boolean,
       following: [String],       //user names of the followees
       queries: [mongoose.ObjectId],       // ids of the queries posted by the userID
-      saved: [mongoose.ObjectId]          // ids of the queries saved by the user
+      saved: {type: [mongoose.ObjectId] ,default: []},          // ids of the queries saved by the user
+      likedPosts: {type: [mongoose.ObjectId] ,default: []}     // ids of the posts liked by the user
 });
 
 const tokenSchema = new mongoose.Schema({
@@ -201,7 +202,6 @@ app.post("/newPost", function(req,res){
 });
 
 // new answer
-
 app.post("/newAnswer", function(req,res){
      const queID = req.body.queID;
      const ans = req.body.newAnswer;
@@ -222,6 +222,95 @@ app.post("/newAnswer", function(req,res){
            res.redirect("/query");
      });
 });
+
+//saving posts
+app.post("/savePost", function(req,res){
+    User.findOne({mail: req.cookies.user.mail}, function(err,user){
+         if(err) {
+           console.log(err);
+           res.send(false);
+          }
+         else{
+           user.saved.push(req.body.id);
+           user.save();
+           res.cookie("user",user);
+           res.send(true);
+         }
+    });
+});
+
+
+// deleting posts from SAVED
+app.post("/deleteFromSaved",function(req,res){
+  const que = req.body.id;
+  User.findOne({mail: req.cookies.user.mail}, function(err,user){
+       if(err) {
+         console.log(err);
+         res.send(false);
+       }else{
+         for(var i = 0; i < user.saved.length; i++){
+             const arr = [];
+             if(user.saved[i].toString() === que){
+                const temp = user.saved[i];
+                user.saved[i] = user.saved[0];
+                user.saved[0] = temp;
+                user.saved.shift();     // shift operation removes the first element from the array
+             }
+         }
+         user.save();
+         res.cookie("user",user);
+         res.send(true);
+       }
+  });
+});
+
+// managing likes
+app.post("/like", function(req,res){
+    Answer.findOne({_id: req.body.id}, function(err, answer){
+           if(err){
+             console.log(err);
+             res.send({likeCount: -1});
+           }else{
+             if(req.body.like === "true") answer.likes--;
+             else answer.likes++;
+             answer.save();
+             Query.findOne({_id: req.body.queID}, function(err,query){
+                   if(err) console.log(err);
+                   for(var i = 0; i < query.answers.length; i++){
+                       if(query.answers[i]._id.toString() === answer._id.toString()){
+                           query.answers[i] = answer;
+                           query.save();
+                           break;
+                       }
+                   }
+             });
+             User.findOne({mail: req.cookies.user.mail}, function(err,user){
+                  if(err) {
+                    console.log(err);
+                  }else{
+                    if(req.body.like === "false"){
+                      user.likedPosts.push(req.body.id);
+                    }else{
+                      for(var i = 0; i < user.likedPosts.length; i++){
+                          const arr = [];
+                          if(user.likedPosts[i].toString() === req.body.id){
+                             const temp = user.likedPosts[i];
+                             user.likedPosts[i] = user.likedPosts[0];
+                             user.likedPosts[0] = temp;
+                             user.likedPosts.shift();     // shift operation removes the first element from the array
+                          }
+                      }
+                    }
+                    user.save();
+                    res.cookie("user",user);
+                    res.send({likeCount: answer.likes });
+                  }
+             });
+
+           }
+    });
+});
+
 
 app.get("/home",function(req,res){
      if(req.cookies.user){

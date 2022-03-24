@@ -68,14 +68,18 @@
               <p> <%= queries[i].mail %> </p>
             </div>
           </div>
-          <buton class="answerQuery" href="/answerQuery" name=<%= queries[i]._id %>>Answer <i class="fa fa-pencil" aria-hidden="true"></i></button>
-            <button class="follow" title="Save Post">+</button>
+          <% if(user.saved.indexOf(queries[i]._id.toString()) === -1) { %>
+              <button class="follow" title="Save Post">+</button>
+          <% } else { %>
+              <button class="follow saved" title="Saved">+</button>
+          <% } %>
+          <buton class="answerQuery" href="/answerQuery" name=<%= queries[i]._id %> >Answer <i class="fa fa-pencil" aria-hidden="true"></i></button>
         </div>
         <div class="answers">
           <% for(var j = 0; j < queries[i].answers.length; j++ ) { %>
           <div class="answer">
             <p> <%= queries[i].answers[j].answer %> </p>
-            <div class="likep">
+            <div class="likep" name= <%= queries[i]._id %> >
               <div class="postedBy">
                 <img class="avatar" src= <%= "/images/avatars/" + queries[i].answers[j].avatar + ".png" %> />
                 <div class="userData">
@@ -83,7 +87,11 @@
                   <p> <%= queries[i].answers[j].mail %> </p>
                 </div>
               </div>
-              <i class='fa fa-heart' style="margin-right: 5px"></i><%= queries[i].answers[j].likes %>
+              <% if(user.likedPosts.indexOf(queries[i].answers[j]._id.toString()) === -1){ %>
+                 <i class='fa fa-heart unliked' style="margin-right: 5px" name= <%= queries[i].answers[j]._id %> ></i><span class="numLikes"><%= queries[i].answers[j].likes %></span>
+              <% } else { %>
+                <i class='fa fa-heart liked' style="margin-right: 5px" name= <%= queries[i].answers[j]._id %> ></i><span class="numLikes"><%= queries[i].answers[j].likes %></span>
+              <% } %>
             </div>
           </div>
           <% } %>
@@ -106,8 +114,7 @@
       <button type="submit">Post</button>
     </form>
   </div>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-  <script type="text/javascript" src="/query.js"></script>
 </body>
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script type="text/javascript" src="/query.js"></script>
 </html>
