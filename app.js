@@ -311,6 +311,12 @@ app.post("/like", function(req,res){
     });
 });
 
+//logging-out
+
+app.get("/logout", function(req,res){
+    res.clearCookie("user");
+    res.redirect("/");
+});
 
 app.get("/home",function(req,res){
      if(req.cookies.user){

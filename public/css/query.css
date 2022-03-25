@@ -20,13 +20,15 @@ body{
 
 .searchBar{
    padding: 10px 0;
+   display: flex;
 }
 
 .searchBar input{
    font-size: 1rem;
    padding: 3px 10px;
    background-color: #B667F1;
-   border: 0;
+   border: 2px solid black;
+   border-radius: 5px 0 0 5px;
 }
 
 .searchBar input::placeholder{
@@ -34,15 +36,19 @@ body{
 }
 
 .searchBar button{
-  font-size: 1rem;
+  font-size: 2rem;
   padding: 3px 3px;
   border: 0;
   cursor: pointer;
   background-color: #FDEBF7;
+  border: 2px solid black;
+  border-left: 0;
+  border-radius: 0 5px 5px 0;
 }
 
 .searchBar button:hover{
   background-color: #FBCAFF;
+  color: #395B64;
 }
 
 .hiddenInput{
@@ -63,6 +69,10 @@ body{
   overflow-x: hidden;
 }
 
+.queryPost:last-child{
+  margin-bottom: 50px;
+}
+
 .que{
   position: relative;
   width: 55vw;
@@ -79,9 +89,6 @@ body{
   font-size: 2rem;
   padding: 0 9px;
   border-radius: 100%;
-  /* position: absolute;
-  right: 5px;
-  bottom: 5px; */
   cursor: pointer;
   pointer-events: auto;
 }
@@ -224,36 +231,45 @@ body{
   font-family: 'Fredoka One',cursive;
 }
 
-.postQue{
+.postQue, .profile{
+  text-align: center;
+  cursor: pointer;
+  width: 200px;
   margin-top: 10px;
   text-decoration: none;
   font-size: 1.4rem;
-  border-radius: 10px;
+  border-radius: 5px;
   color: white;
   background-color: #8946A6;
   padding: 0 10px;
-  border: 1px solid #8946A6;
+  border: 2px solid black;
   transition: all 1s;
 }
 
-.postQue:hover{
+.logout{
+  margin-bottom: 10px;
+}
+
+.postQue:hover, .profile:hover{
   background-color: white;
   color: #8946A6;
 }
 
-.following{
+.following, .savedPosts,.logout{
+  width: 200px;
+  text-align: center;
   text-decoration: none;
   background-color: white;
   color: #8946A6;
   padding: 0 10px;
-  border: 1px solid #8946A6;
+  border: 2px solid black;
   transition: all 1s;
   font-size: 1.4rem;
-  border-radius: 10px;
+  border-radius: 5px;
   margin-top: 10px;
 }
 
-.following:hover{
+.following:hover, .savedPosts:hover,.logout:hover{
   color: white;
   background-color: #8946A6;
 }
@@ -419,7 +435,7 @@ textarea{
        }
 }
 
-@media only screen and (max-height: 385px){
+@media only screen and (max-height: 560px){
        .sideBar{
            overflow-y: scroll;
        }
