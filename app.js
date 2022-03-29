@@ -239,7 +239,6 @@ app.post("/savePost", function(req,res){
     });
 });
 
-
 // deleting posts from SAVED
 app.post("/deleteFromSaved",function(req,res){
   const que = req.body.id;
@@ -312,10 +311,31 @@ app.post("/like", function(req,res){
 });
 
 //logging-out
-
 app.get("/logout", function(req,res){
     res.clearCookie("user");
     res.redirect("/");
+});
+
+// saved posts
+app.get("/saved-posts", function(req,res){
+    const ids = req.cookies.user.saved;
+    ids.forEach( id =>{
+        id = mongoose.Types.ObjectId(id);
+    });
+    const avatar = "/images/avatars/" + req.cookies.user.avatar + ".png";
+
+    Query.find( { _id: { $in: ids} } , function(err,sQueries){
+          if(!err) res.render("saved",{user: req.cookies.user, avatar: avatar, queries: sQueries});
+    });
+});
+
+
+//profile page
+app.get("/:userId", function(req,res){
+    Query.find({mail: req.cookies.user.mail},function(err,ques){
+          if(err) console.log(err);
+          else res.render("profile", {user: req.cookies.user, queries: ques});
+    });
 });
 
 app.get("/home",function(req,res){

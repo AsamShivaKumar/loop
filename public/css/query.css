@@ -231,7 +231,7 @@ body{
   font-family: 'Fredoka One',cursive;
 }
 
-.postQue, .profile{
+.pages{
   text-align: center;
   cursor: pointer;
   width: 200px;
@@ -246,10 +246,40 @@ body{
   transition: all 1s;
 }
 
+.pages:hover{
+  background-color: white;
+  color: #8946A6;
+}
+
+.page{
+  background-color: white;
+  color: #8946A6;
+  padding: 0 10px;
+  border-width: 0;
+}
+.page:hover{
+  cursor: inherit;
+}
+
 .logout{
   margin-bottom: 10px;
 }
 
+/*
+.postQue, .profile{
+  text-align: center;
+  cursor: pointer;
+  width: 200px;
+  margin-top: 10px;
+  text-decoration: none;
+  font-size: 1.4rem;
+  border-radius: 5px;
+  color: white;
+  background-color: #8946A6;
+  padding: 0 10px;
+  border: 2px solid black;
+  transition: all 1s;
+}
 .postQue:hover, .profile:hover{
   background-color: white;
   color: #8946A6;
@@ -273,6 +303,7 @@ body{
   color: white;
   background-color: #8946A6;
 }
+*/
 
 .sideBarButton{
   border-radius: 0 45px 45px 0;
@@ -326,7 +357,6 @@ body{
   width: 0;
   height: 0;
   background-image: linear-gradient(to top,#FFDDEE,#FFBDE6);
-  border-radius: 10px;
   z-index: 2;
   left: 10vw;
   top: 10vh;
@@ -345,19 +375,17 @@ textarea{
 }
 
 .textNewPost,.textNewAnswer{
-  border-radius: 5px;
   width: 70vw;
   height: 60vh;
   background-color: #F3E9DD;
   font-size: 1rem;
-  color: #FF5C8D;
+  color: #8946A6;
 }
 
 .newPost button, .newAnswer button{
   font-size: 1.2rem;
   color: grey;
   padding: 5px 20px;
-  border-radius: 10px;
   border: 3px solid grey;
   background: #F3E9DD;
   position: absolute;
