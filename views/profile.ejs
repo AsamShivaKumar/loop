@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width" />
+  <title>loop</title>
+  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Oxygen:wght@700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Righteous&display=swap" rel="stylesheet">
+  <link href="/css/profile.css" rel="stylesheet" type="text/css" />
+  <link href="/images/icon.png" rel="icon" />
+</head>
+
+<body>
+  <a class="back" href="/query">
+     <i class="fa fa-arrow-circle-left" aria-hidden="true"></i>
+  </a>
+  <div class="upper"></div>
+  <div class="profile">
+    <img src=<%= "/images/avatars/" + user.avatar + ".png" %>>
+  </div>
+  <div class="details">
+    <p> <%= user.userName %> </p>
+    <p> <%= user.mail %> </p>
+  </div>
+
+  <div class="container">
+        <div class="nav">
+             <i class="fa fa-question-circle icons active" name = "queries" aria-hidden="true"></i>
+             <i class="fa fa-pencil-square-o icons" aria-hidden="true" name="answers"></i>
+             <i class="fa fa-users icons" aria-hidden="true" name="followees"></i>
+             <i class="fa fa-user-circle-o icons" aria-hidden="true" name="user"></i>
+        </div>
+        <div class="content">
+          <div class="queries display">
+               <% for(var i = 0; i < queries.length; i++) { %>
+                  <div name= <%= i %> > <%= queries[i].que %> </div>
+                  <div class="query hide">
+                       <i class="fa fa-times-circle" aria-hidden="true"></i>
+                       <div class="que">
+                         <div class="question"><%= queries[i].que %></div>
+                         <div class="postedBy">
+                           <img class="avatar" src=<%= "/images/avatars/" + queries[i].avatar + ".png" %> />
+                           <div class="userData">
+                             <p> <%= queries[i].postedBy %> </p>
+                             <p> <%= queries[i].mail %> </p>
+                           </div>
+                         </div>
+                         </div>
+                  </div>
+               <% } %>
+          </div>
+          <div class="answers"></div>
+          <div class="followees"></div>
+          <div class="user"></div>
+        </div>
+  </div>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script type="text/javascript" src="/profile.js"></script>
+  <script type="text/javascript">
+  document.querySelector(".fa-users").addEventListener("click", function(){
+           var div = document.querySelector(".followees");
+           if( <%= user.following.length %> === 0){
+              div.innerHTML = "<h1>None </h1><i class='fa fa-user-times' aria-hidden='true'></i>"
+              div.classList.add("none");
+              div.classList.remove("exist");
+           }else{
+             div.classList.remove("none");
+             div.classList.add("exist");
+           }
+  });
+  </script>
+</body>
+
+</html>
