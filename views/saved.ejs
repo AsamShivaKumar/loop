@@ -14,6 +14,7 @@
   <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>
   <link href="/css/query.css" rel="stylesheet" type="text/css" />
   <link href="/css/navbar.css" rel="stylesheet" type="text/css" />
+  <link href="/css/sideBar.css" rel="stylesheet" type="text/css" />
   <link href="/images/icon.png" rel="icon" />
 </head>
 
@@ -26,7 +27,6 @@
   <ul class="navbar">
     <a href="/query">Home</a>
     <a href="#" name=<%= user.userName %>>Following</a>
-    <a class="postQue"name=<%= user.userName %> >Post a question</a>
     <a href="#" class="savedPosts active">Saved Posts</a>
     <a class="profile" href= <%= "/" + user._id %> >Profile <i class="fa fa-user" aria-hidden="true"></i></a>
     <a href="/logout" class="logout">Logout ➡</a>

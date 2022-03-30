@@ -39,6 +39,23 @@ body{
   width: 150px;
 }
 
+.details{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: calc(25vh + 120px);
+  width: 100vw;
+  color: white;
+  font-family: 'Righteous', cursive;
+  font-size: 1.5rem;
+}
+
+.details p{
+  margin: 0;
+}
+
 .back{
   position: absolute;
   font-size: 2.5rem;
@@ -51,12 +68,12 @@ body{
 
 .nav{
   position: absolute;
-  width: 300px;
+  width: 390px;
   height: 60px;
   background-color: white;
   border-radius: 10px;
-  top: 140px;
-  left: calc(50vw - 150px);
+  top: 210px;
+  left: calc(50vw - 195px);
   color: #8946A6;
   font-size: 2.5rem;
 }
@@ -99,9 +116,13 @@ body{
   left: 140px;
 }
 
+.nav i:nth-child(4){
+  left: 180px;
+}
+
 .content{
   position: absolute;
-  top: 220px;
+  top: 290px;
   left: 10vw;
   display: flex;
   flex-direction: column;
@@ -115,6 +136,33 @@ body{
   border-radius: 5px;
   display: none;
   margin-bottom: 40px;
+}
+
+.followees{
+  position: relative;
+  left: 20vw;
+  width: 40vw;
+  min-height: 20vh;
+  border-radius: 5px;
+  display: none;
+  margin-bottom: 40px;
+}
+
+.none{
+  opacity: 0.5;
+  text-align: center;
+  font-size: 1rem;
+  justify-content: center;
+  align-items: center;
+}
+.fa-user-times{
+  font-size: 2rem;
+}
+
+.exist{
+  opacity: 1;
+  text-align: left;
+  font-size: 1.5rem;
 }
 
 .queries div{
@@ -135,13 +183,16 @@ body{
 
 .query{
   position: absolute;
-  display: none;
   width: 80vw;
   height: 80vh;
   background-color: #F3E9DD;
   left: 10vw;
   top: 10vh;
   position: fixed;
+}
+
+.hide{
+  display: none;
 }
 
 .query i{
@@ -154,4 +205,40 @@ body{
 .display{
   display: flex;
   flex-direction: column;
+}
+
+/* queries */
+
+.question{
+  white-space: pre-wrap;
+  text-align: left;
+}
+
+.que{
+  position: relative;
+  width: 55vw;
+  background-image: linear-gradient(to bottom,#FFCDDD,#EA99D5);
+  color: #79018C;
+  font-size: 1.4rem;
+  text-align: center;
+  padding: 10px 10px;
+}
+.postedBy{
+  display: flex;
+  flex-direction: row;
+  font-size: 1rem;
+}
+
+.avatar{
+  border-radius: 100%;
+  width: 50px;
+  height: 50px;
+}
+
+.userData{
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  height: 50px;
+  justify-content: center;
 }

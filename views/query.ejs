@@ -14,6 +14,7 @@
   <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>
   <link href="/css/query.css" rel="stylesheet" type="text/css" />
   <link href="/css/navbar.css" rel="stylesheet" type="text/css" />
+  <link href="/css/sideBar.css" rel="stylesheet" type="text/css" />
   <link href="/images/icon.png" rel="icon" />
 </head>
 
@@ -36,12 +37,14 @@
       <div class="user">
         <img class="avatar" src=<%= avatar %> alt="Avatar" title="avatar" />
         <h2> <%= user.userName %> </h2>
-        <div class="searchBar">
-          <input type="text" placeholder="Search users here..."/>
-          <button type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
+        <div class="search">
+          <div class="searchBar">
+            <input type="text" placeholder="Search users here..."/>
+            <button type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
+          </div>
+          <div class="matchedUsers"></div>
         </div>
         <a href="#" class="page pages">Home</a>
-        <a class="pages tp">Page</a>
         <a class="following pages" href="#" name=<%= user.userName %>>Following</a>
         <a class="pages postQue" name=<%= user.userName %> >Post a question</a>
         <a href="/saved-posts" class="savedPosts pages">Saved Posts</a>
@@ -123,4 +126,5 @@
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script type="text/javascript" src="/query.js"></script>
+<script type="text/javascript" src="/search.js"></script>
 </html>

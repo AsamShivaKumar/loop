@@ -41,7 +41,8 @@ const userSchema = new mongoose.Schema({
       passHash: String,
       avatar: {type: Number, default: 6},
       active: Boolean,
-      following: [String],       //user names of the followees
+      following: [String],       // user names of the followees
+      followers: [String],       // followers' user names
       queries: [mongoose.ObjectId],       // ids of the queries posted by the userID
       saved: {type: [mongoose.ObjectId] ,default: []},          // ids of the queries saved by the user
       likedPosts: {type: [mongoose.ObjectId] ,default: []}     // ids of the posts liked by the user
@@ -329,7 +330,6 @@ app.get("/saved-posts", function(req,res){
     });
 });
 
-
 //profile page
 app.get("/:userId", function(req,res){
     Query.find({mail: req.cookies.user.mail},function(err,ques){
@@ -337,6 +337,28 @@ app.get("/:userId", function(req,res){
           else res.render("profile", {user: req.cookies.user, queries: ques});
     });
 });
+
+// answers sec in profile page
+app.post("/answers", function(req,res){
+    Answer.find({ mail: req.body.mail.trim()}, function(err, ans){
+           if(err) console.log(err);
+           else res.send({ answers: ans });
+    });
+});
+
+//searching users
+function escapeRegex(regex) {
+    return regex.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
+};
+
+app.post("/search", function(req,res){
+    const reg = new RegExp(escapeRegex(req.body.user),"gi");
+    User.find({ userName: reg}, function(err,userObjs){
+         if(err) console.log(err);
+         else res.send({ users: userObjs});
+    });
+});
+
 
 app.get("/home",function(req,res){
      if(req.cookies.user){
