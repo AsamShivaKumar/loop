@@ -255,20 +255,17 @@ textarea{
 @media only screen and (max-width: 1300px){
        .sideBar{
          left: -100%;
-         z-index: 1;
+         z-index: 1 !important;
        }
 
        .sideBarButton{
          left: 0;
+         display: inline-block;
+         position: fixed;
        }
 
        .queryPost{
           margin-left: 50px;
-       }
-
-       .sideBarButton{
-         display: inline-block;
-         position: fixed;
        }
        .sideBar.click{
          left: 0;
@@ -285,7 +282,6 @@ textarea{
          width: 80vw;
          border-radius: 0;
        }
-
        .comments{
          padding: 10px;
        }

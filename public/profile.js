@@ -21,13 +21,19 @@ document.querySelector(".fa-pencil-square-o").addEventListener("click", function
   };
   console.log("req: " + req.mail);
   $.post("/answers", req, function(res, status) {
-    for (var k = 0; k < res.answers.length; k++) {
-      const div = document.createElement("div");
-      document.querySelector(".answers").appendChild(div);
-      const html = "<p>" + res.answers[k].answer + "</p><br /><p>" + res.answers[k].likes + "<i class='fa fa-heart' aria-hidden='true'></i></p>";
-      document.querySelector(".answers div").innerHTML += html;
-    }
+          for (var k = 0; k < res.answers.length; k++) {
+            const div = document.createElement("div");
+            document.querySelector(".answers").appendChild(div);
+            const html = "<div class='answer'><div class='ans'>" + res.answers[k].answer + "</div><div class='likes'>" +  "<i class='fa fa-heart' aria-hidden='true'></i>" + res.answers[k].likes + "</div></div>";
+            document.querySelector(".answers div").innerHTML += html;
+          }
   });
+});
+
+// changing avatar
+
+document.querySelector(".changeAvatar button").addEventListener("click", function(){
+         document.querySelector(".avatars").classList.toggle("show");
 });
 
 var ques = document.querySelectorAll(".queries div");
