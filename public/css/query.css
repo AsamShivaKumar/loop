@@ -255,11 +255,11 @@ textarea{
 @media only screen and (max-width: 1300px){
        .sideBar{
          left: -100%;
-         z-index: 1 !important;
+         z-index: 1;
        }
 
        .sideBarButton{
-         left: 0;
+         left: 0 !important;
          display: inline-block;
          position: fixed;
        }

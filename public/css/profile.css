@@ -267,7 +267,7 @@ body{
 }
 
 .user{
-  background-color: #FFC7C7;
+  /* background-color: #FFC7C7; */
   border-radius: 5px;
   justify-content: flex-start;
   align-items: center;
@@ -286,7 +286,7 @@ body{
 .detail span{
   background-color: #DADBBD;
   border-radius: 5px;
-  box-shadow: 10px 10px 40px #F68989;
+  box-shadow: 10px 10px 40px #8946A6;
   padding: 0 10px;
   margin-bottom: 10px;
   color: #151D3B;
@@ -295,7 +295,7 @@ body{
 .userName{
   justify-content: center;
   display: flex;
-  box-shadow: 0 10px 10px #F68989;
+  box-shadow: 0 10px 10px #8946A6;
 }
 
 .userName input, .userName button{
@@ -357,7 +357,7 @@ body{
   font-size: 2rem;
   font-family: 'Genos', sans-serif;
   padding-top: 5px;
-  box-shadow: 0 10px 10px #F68989;
+  box-shadow: 0 10px 10px #8946A6;
 }
 
 .changeAvatar button{
@@ -387,7 +387,7 @@ body{
   margin-top: 10px;
   border: 0;
   font-family: 'Genos', sans-serif;
-  box-shadow: 0 10px 10px #F68989;
+  box-shadow: 0 10px 10px #8946A6;
   cursor: pointer;
   transition: all 1s;
   background-color: #D8D2CB;
@@ -396,4 +396,89 @@ body{
 .delete:hover, .changeAvatar button:hover, .userName button:hover{
   background-color: #203239;
   color: #D8D2CB;
+}
+
+.deleteAccount, .deletedAccount{
+  z-index: 1;
+  width: 500px;
+  height: 300px;
+  background: white;
+  border-radius: 5px;
+  position: absolute;
+  left: calc(50vw - 250px);
+  top: calc(50vh - 150px);
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  font-family: 'Padauk', sans-serif;
+  box-shadow: 10px 10px 20px #2B2B2B;
+}
+
+.deletedAccount{
+  z-index: 2;
+}
+
+.openDelete{
+  display: flex;
+}
+
+.close{
+  font-size: 2rem;
+  position: absolute;
+  border: 0;
+  background: white;
+  right: 0;
+  top: 0;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.pass{
+  text-align: center;
+  font-size: 1.5rem;
+}
+
+.deleteAccount input{
+  border: 0;
+  width: 250px;
+  font-size: 1.5rem;
+  border-bottom: 2px solid black;
+}
+
+.deleteAccount input:focus{
+   outline: none;
+   border-bottom: 2.5px solid black;
+}
+
+.buttons{
+  margin-top: 20px;
+  display: flex;
+}
+
+.buttons button{
+  font-size: 1rem;
+  border: 0;
+  color: white;
+  background-color: #04293A;
+  padding: 10px;
+  width: 150px;
+  cursor: pointer;
+  transition: all 0.7s;
+  border: 2px solid #04293A;
+}
+
+.buttons button:hover{
+  color: #041C32;
+  background-color: white;
+}
+
+.buttons button:nth-child(1){
+  border-radius: 5px 0 0 5px;
+  margin-right: 2px;
+}
+
+.buttons button:nth-child(2){
+  border-radius: 0 5px 5px 0;
 }

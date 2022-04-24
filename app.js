@@ -343,6 +343,43 @@ app.post("/answers", function(req,res){
     });
 });
 
+// changing user-name
+app.post("/changeUser", function(req,res){
+    User.findOne({mail: req.body.mail.trim()}, function(err,user){
+         if(err){
+           console.log(err);
+           res.send({changed: false});
+         }else if(user){
+           user.userName = req.body.userName;
+           user.save();
+           console.log(user);
+           res.cookie("user", user);
+           res.send({ changed: true });
+         }
+    });
+});
+
+// deleting account
+app.post("/deleteAccount", function(req,res){
+
+    var user = req.cookies.user;
+
+    bcrypt.compare(req.body.password, req.cookies.user.passHash, function(err,result){
+           if(err){
+             console.log(err);
+           }else if(result){
+             User.deleteOne({ mail: user.mail });
+             res.send({ deleted: true });
+           }else{
+             res.send({ deleted: false });
+           }
+    });
+});
+
+app.post("/",function(req,res){
+    res.redirect("/logout");    
+});
+
 //searching users
 function escapeRegex(regex) {
     return regex.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");

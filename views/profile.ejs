@@ -11,6 +11,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Oxygen:wght@700&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Righteous&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Genos:wght@300&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Padauk&display=swap" rel="stylesheet">
   <link href="/css/profile.css" rel="stylesheet" type="text/css" />
   <link href="/images/icon.png" rel="icon" />
 </head>
@@ -66,8 +67,7 @@
               <span>Change Avatar</span><button><i class="fa fa-external-link" aria-hidden="true"></i></button>
             </div>
             <div class="detail">
-              <span title="firstName"> <%= user.firstName %> </span>
-              <span title="lastName"> <%= user.lastName %> </span>
+              <span title="firstName"> <%= user.firstName  + " " + user.lastName %> </span>
             </div>
           </div>
         </div>
@@ -78,6 +78,22 @@
         <img title = <%= i %> src = <%= "/images/avatars/" + i + ".png" %> />
       </div>
     <% } %>
+  </div>
+  <div class="deleteAccount">
+    <button class="close"><i class="fa fa-times-circle" aria-hidden="true"></i></button>
+    <div class="pass">
+      Enter password:<br />
+      <input type="password"/>
+    </div>
+    <div class="buttons">
+      <button class="deleteButton">Delete</button>
+      <button class="cancel">Cancel</button>
+    </div>
+    <div class="message"></div>
+  </div>
+  <div class="deletedAccount">
+    <i class="fa fa-check-circle" aria-hidden="true"></i>
+    Deleted!
   </div>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   <script type="text/javascript" src="/profile.js"></script>
