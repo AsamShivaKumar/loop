@@ -259,16 +259,13 @@ textarea{
        }
 
        .sideBarButton{
-         left: 0;
+         left: 0 !important;
+         display: inline-block;
+         position: fixed;
        }
 
        .queryPost{
           margin-left: 50px;
-       }
-
-       .sideBarButton{
-         display: inline-block;
-         position: fixed;
        }
        .sideBar.click{
          left: 0;
@@ -285,7 +282,6 @@ textarea{
          width: 80vw;
          border-radius: 0;
        }
-
        .comments{
          padding: 10px;
        }

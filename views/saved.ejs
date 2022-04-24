@@ -37,14 +37,17 @@
       <div class="user">
         <img class="avatar" src=<%= avatar %> alt="Avatar" title="avatar" />
         <h2> <%= user.userName %> </h2>
-        <div class="searchBar">
-          <input type="text" placeholder="Search users here..."/>
-          <button type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
+        <div class="search">
+          <div class="searchBar">
+            <input type="text" placeholder="Search users here..."/>
+            <button type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
+          </div>
+          <div class="matchedUsers"></div>
         </div>
-        <a href="#" class="pages">Home</a>
+        <a href="#" class="page pages">Home</a>
         <a class="following pages" href="#" name=<%= user.userName %>>Following</a>
-        <a class="postQue pages" name=<%= user.userName %>>Post a question</a>
-        <a href="/saved-posts" class="savedPosts pages page">Saved Posts</a>
+        <a class="pages postQue" name=<%= user.userName %> >Post a question</a>
+        <a href="/saved-posts" class="savedPosts pages">Saved Posts</a>
         <a class="profile pages" href= <%= "/" + user._id %> >Profile <i class="fa fa-user" aria-hidden="true"></i></a>
         <a href="/logout" class="logout pages">Logout ➡</a>
       </div>

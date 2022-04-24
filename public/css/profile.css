@@ -66,6 +66,11 @@ body{
   z-index: 1;
 }
 
+.back:hover{
+  font-size: 3rem;
+  filter: drop-shadow(10px 10px 10px grey);
+}
+
 .nav{
   position: absolute;
   width: 390px;
@@ -132,7 +137,6 @@ body{
 
 .queries, .answers, .user{
   width: 80vw;
-  min-height: 40vh;
   border-radius: 5px;
   display: none;
   margin-bottom: 40px;
@@ -241,4 +245,240 @@ body{
   text-align: left;
   height: 50px;
   justify-content: center;
+}
+
+.answer{
+  display: flex;
+  flex-direction: column;
+  background-color: #FAD9E6;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  padding: 10px;
+  color: #2C2E43;
+  font-size: 2rem;
+  font-family: 'Genos',sans-serif;
+}
+
+.ans{
+  margin: 0;
+  white-space: pre-wrap;
+  word-break: break-all;
+  overflow-x: visible;
+}
+
+.user{
+  /* background-color: #FFC7C7; */
+  border-radius: 5px;
+  justify-content: flex-start;
+  align-items: center;
+  height: 250px;
+  padding-top: 20px;
+}
+
+.detail{
+  padding-top: 40px;
+  font-size: 1.5rem;
+  font-family: 'Genos',sans-serif;
+  display: flex;
+  flex-direction: column;
+}
+
+.detail span{
+  background-color: #DADBBD;
+  border-radius: 5px;
+  box-shadow: 10px 10px 40px #8946A6;
+  padding: 0 10px;
+  margin-bottom: 10px;
+  color: #151D3B;
+}
+
+.userName{
+  justify-content: center;
+  display: flex;
+  box-shadow: 0 10px 10px #8946A6;
+}
+
+.userName input, .userName button{
+  border: 0;
+  font-size: 1.5rem;
+  font-family: 'Genos', sans-serif;
+}
+
+.userName input{
+    border-radius: 5px 0 0 5px;
+    padding: 0 10px;
+}
+
+.userName input:focus{
+  background-color: #CFD3CE;
+}
+
+.userName button{
+  border-radius: 0 5px 5px 0;
+  cursor: pointer;
+  background-color: #D8D2CB;
+  transition: background 1s;
+}
+
+.avatars{
+    background-color: #DFDFDE;
+    border-radius: 5px;
+    position: absolute;
+    left: calc(50vw - 150px);
+    top: calc(50vh - 188px);
+    display: none;
+    grid-template-columns: 1fr 1fr 1fr;
+    width: 300px;
+}
+
+.show{
+  display: grid;
+  z-index: 1;
+}
+
+.image{
+  width: 70px;
+  height: 70px;
+  overflow: hidden;
+  border-radius: 5px;
+  border: 2px solid white;
+  margin: 10px;
+  background-color: white;
+}
+.avatars img{
+  width: 70px;
+  cursor: pointer;
+}
+
+.changeAvatar{
+  width: 300px;
+  display: flex;
+  justify-content: space-between;
+  font-size: 2rem;
+  font-family: 'Genos', sans-serif;
+  padding-top: 5px;
+  box-shadow: 0 10px 10px #8946A6;
+}
+
+.changeAvatar button{
+  font-size: 2rem;
+  border-radius: 0 5px 5px 0;
+  border: 0;
+  cursor: pointer;
+  background-color: #D8D2CB;
+  transition: all 1s;
+}
+
+
+.changeAvatar span{
+  background-color: white;
+  border-radius: 5px 0 0 5px;
+  padding: 0 5px;
+  width: 300px;
+  padding-left: 40px;
+  display: inline-block;
+  text-align: center;
+}
+
+.delete{
+  width: 300px;
+  font-size: 2rem;
+  border-radius: 5px;
+  margin-top: 10px;
+  border: 0;
+  font-family: 'Genos', sans-serif;
+  box-shadow: 0 10px 10px #8946A6;
+  cursor: pointer;
+  transition: all 1s;
+  background-color: #D8D2CB;
+}
+
+.delete:hover, .changeAvatar button:hover, .userName button:hover{
+  background-color: #203239;
+  color: #D8D2CB;
+}
+
+.deleteAccount, .deletedAccount{
+  z-index: 1;
+  width: 500px;
+  height: 300px;
+  background: white;
+  border-radius: 5px;
+  position: absolute;
+  left: calc(50vw - 250px);
+  top: calc(50vh - 150px);
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  font-family: 'Padauk', sans-serif;
+  box-shadow: 10px 10px 20px #2B2B2B;
+}
+
+.deletedAccount{
+  z-index: 2;
+}
+
+.openDelete{
+  display: flex;
+}
+
+.close{
+  font-size: 2rem;
+  position: absolute;
+  border: 0;
+  background: white;
+  right: 0;
+  top: 0;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.pass{
+  text-align: center;
+  font-size: 1.5rem;
+}
+
+.deleteAccount input{
+  border: 0;
+  width: 250px;
+  font-size: 1.5rem;
+  border-bottom: 2px solid black;
+}
+
+.deleteAccount input:focus{
+   outline: none;
+   border-bottom: 2.5px solid black;
+}
+
+.buttons{
+  margin-top: 20px;
+  display: flex;
+}
+
+.buttons button{
+  font-size: 1rem;
+  border: 0;
+  color: white;
+  background-color: #04293A;
+  padding: 10px;
+  width: 150px;
+  cursor: pointer;
+  transition: all 0.7s;
+  border: 2px solid #04293A;
+}
+
+.buttons button:hover{
+  color: #041C32;
+  background-color: white;
+}
+
+.buttons button:nth-child(1){
+  border-radius: 5px 0 0 5px;
+  margin-right: 2px;
+}
+
+.buttons button:nth-child(2){
+  border-radius: 0 5px 5px 0;
 }

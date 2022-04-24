@@ -76,10 +76,9 @@ const Query = new mongoose.model("Query",querySchema);
 
 // login page
 app.get("/", function(req,res){
-    // console.log(req.cookies);
   if(req.cookies.user){
     console.log("Logged in!");
-    res.render("home",{userName: req.cookies.user.userName});
+    res.redirect("/home");
   }else{
     res.render("lgin", {Message: ""});
   }
@@ -97,7 +96,7 @@ app.post("/login",function(req,res){
                 }else if(result) {
                   var mail = req.body.Email;
                   res.cookie("user", user);
-                  res.render("home",{userName: user.userName});
+                  res.redirect("/");
                 }else{
                   res.render("login", {Message: "Incorrect Password!"});
                 }
@@ -143,8 +142,6 @@ app.post("/signUp", function(req,res){
 
 function sendMail(userID,userMailID){
   const auth = randString.generate(10);
-
-  // console.log("Usermail:" + userMailID);
   const options = {
     from: process.env.SERVER_MAIL,
     to: userMailID,
@@ -181,7 +178,7 @@ app.post("/auth/:userId",function(req,res){
 });
 
 // query Page
-app.get("/query",function(req,res){
+app.get("/home",function(req,res){
     const avatar = "/images/avatars/" + req.cookies.user.avatar + ".png";
     Query.find().limit(10).exec(function(err,posts){
          if(!err) res.render("query",{user: req.cookies.user, avatar: avatar, queries: posts});
@@ -199,7 +196,7 @@ app.post("/newPost", function(req,res){
         answers: []
     });
     que.save();
-    res.redirect("/query");
+    res.redirect("/home");
 });
 
 // new answer
@@ -220,7 +217,7 @@ app.post("/newAnswer", function(req,res){
            answer.save();
            query.answers.push(answer);
            query.save();
-           res.redirect("/query");
+           res.redirect("/home");
      });
 });
 
@@ -346,6 +343,43 @@ app.post("/answers", function(req,res){
     });
 });
 
+// changing user-name
+app.post("/changeUser", function(req,res){
+    User.findOne({mail: req.body.mail.trim()}, function(err,user){
+         if(err){
+           console.log(err);
+           res.send({changed: false});
+         }else if(user){
+           user.userName = req.body.userName;
+           user.save();
+           console.log(user);
+           res.cookie("user", user);
+           res.send({ changed: true });
+         }
+    });
+});
+
+// deleting account
+app.post("/deleteAccount", function(req,res){
+
+    var user = req.cookies.user;
+
+    bcrypt.compare(req.body.password, req.cookies.user.passHash, function(err,result){
+           if(err){
+             console.log(err);
+           }else if(result){
+             User.deleteOne({ mail: user.mail });
+             res.send({ deleted: true });
+           }else{
+             res.send({ deleted: false });
+           }
+    });
+});
+
+app.post("/",function(req,res){
+    res.redirect("/logout");    
+});
+
 //searching users
 function escapeRegex(regex) {
     return regex.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
@@ -357,13 +391,6 @@ app.post("/search", function(req,res){
          if(err) console.log(err);
          else res.send({ users: userObjs});
     });
-});
-
-
-app.get("/home",function(req,res){
-     if(req.cookies.user){
-       res.render("home",{userName: req.cookies.user.userName});
-     }
 });
 
 app.listen("3000",function(){

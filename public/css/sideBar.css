@@ -153,6 +153,20 @@
   font-size: 2rem;
   justify-content: left;
   align-items: center;
+  border-radius: 5px;
+  margin: 0 2px;
+  cursor: pointer;
+  padding-bottom: 10px;
+  transition: all 1s;
+}
+
+.searchedUser::nth-child(1){
+  margin-top: 10px;
+}
+
+.searchedUser:hover{
+    background-image: linear-gradient(to left,#EEEEEE,#E4EFE7,#CAE4DB);
+    color: #888888;
 }
 
 .searchedUser img{
