@@ -21,11 +21,15 @@ document.querySelector(".fa-pencil-square-o").addEventListener("click", function
   };
   console.log("req: " + req.mail);
   $.post("/answers", req, function(res, status) {
-          for (var k = 0; k < res.answers.length; k++) {
-            const div = document.createElement("div");
-            document.querySelector(".answers").appendChild(div);
-            const html = "<div class='answer'><div class='ans'>" + res.answers[k].answer + "</div><div class='likes'>" +  "<i class='fa fa-heart' aria-hidden='true'></i>" + res.answers[k].likes + "</div></div>";
-            document.querySelector(".answers div").innerHTML += html;
+          if(res.answers.length == 0){
+             document.querySelector(".answers").innerHTML = "<h1>None</h1>";
+          }else{
+            for (var k = 0; k < res.answers.length; k++) {
+              const div = document.createElement("div");
+              document.querySelector(".answers").appendChild(div);
+              const html = "<div class='answer'><div class='ans'>" + res.answers[k].answer + "</div><div class='likes'>" +  "<i class='fa fa-heart' aria-hidden='true'></i>" + res.answers[k].likes + "</div></div>";
+              document.querySelector(".answers div").innerHTML += html;
+            }
           }
   });
 });
@@ -79,16 +83,33 @@ document.querySelector(".deleteButton").addEventListener("click", function(){
 
          var req = { password: document.querySelector(".pass input").value };
          $.post("/deleteAccount",req,function(res,status){
-           if(!res.deleted){
+
+           if(res.deleted === false){
                document.querySelector(".message").textContent = "Check password and try again!";
                setTimeout(function(){
                  document.querySelector(".message").textContent = "";
                }, 3000);
            }else{
-               document.querySelector(".deletedAccount").classList.add("open");
-               setTimeout(function(){
-                 $.post("/");
-               },2000);
+               $('body').html(res);
+               document.querySelector("body").classList.add("deletedBody");
            }
          });
 });
+// end of managing deletion of account!
+
+// changing the avatar
+document.querySelectorAll(".image img").forEach(img =>{
+         img.addEventListener("click", function(evt){
+             var req = {
+               avt: evt.target.getAttribute("title")
+             };
+             $.post("/changeAvatar",req,function(res,status){
+                  document.querySelector(".profile img").setAttribute("src","/images/avatars/" + req.avt + ".png");
+                  document.querySelector(".span").innerHTML = "Avatar changed!";
+                  document.querySelector(".avatars").classList.toggle("show");
+                  setTimeout(function(){
+                      document.querySelector(".span").innerHTML = "Change Avatar";
+                  },3000);
+             });
+         });
+})

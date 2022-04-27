@@ -87,18 +87,18 @@ app.get("/", function(req,res){
 // Login-in user
 app.post("/login",function(req,res){
     User.findOne({mail: req.body.Email}, function(err,user){
-         if(err) res.render("login", {Message: "Error!!!"});
-         else if(user == null) res.render("login", {Message: "Email doesn't exists!"});
-         else if(!user.active) res.render("login", {Message: "Authenticate your mail and try again!"});
+         if(err) res.render("lgin", {Message: "Error!!!"});
+         else if(user == null) res.render("lgin", {Message: "Email doesn't exists!"});
+         else if(!user.active) res.render("lgin", {Message: "Authenticate your mail and try again!"});
          else bcrypt.compare(req.body.password,user.passHash, function(err,result){
                 if(err){
-                  res.render("login", {Message: "Try again"});
+                  res.render("lgin", {Message: "Try again"});
                 }else if(result) {
                   var mail = req.body.Email;
                   res.cookie("user", user);
                   res.redirect("/");
                 }else{
-                  res.render("login", {Message: "Incorrect Password!"});
+                  res.render("lgin", {Message: "Incorrect Password!"});
                 }
          });
     });
@@ -168,7 +168,7 @@ app.post("/auth/:userId",function(req,res){
            if(token.authCode === req.body.authCode){
               console.log("Successful!");
               Token.findOneAndDelete({userID: userId});
-              res.render("login",{Message: "Successfully registered!"});
+              res.render("lgin",{Message: "Successfully registered!"});
            }else{
               Token.findOneAndDelete({userID: userId});
               User.findOneAndDelete({id: userId});
@@ -352,7 +352,6 @@ app.post("/changeUser", function(req,res){
          }else if(user){
            user.userName = req.body.userName;
            user.save();
-           console.log(user);
            res.cookie("user", user);
            res.send({ changed: true });
          }
@@ -368,16 +367,33 @@ app.post("/deleteAccount", function(req,res){
            if(err){
              console.log(err);
            }else if(result){
-             User.deleteOne({ mail: user.mail });
-             res.send({ deleted: true });
+             User.deleteOne({ mail: user.mail }).then(function(){
+                  res.clearCookie("user");
+                  res.render("deleted",{});
+             }).catch(function(err){
+               res.send({ deleted: false });
+             });
            }else{
              res.send({ deleted: false });
            }
     });
 });
 
-app.post("/",function(req,res){
-    res.redirect("/logout");    
+// changing avatar
+app.post("/changeAvatar", function(req,res){
+    var m = req.cookies.user.mail;
+    var avt = req.body.avt;
+    User.findOne({ mail: m }, function(err,user){
+         if(err){
+           console.log(err);
+         }else{
+           console.log(user);
+           user.avatar = avt;
+           user.save();
+           res.cookie("user",user);
+           res.send({ done: true });
+         }
+    });
 });
 
 //searching users
