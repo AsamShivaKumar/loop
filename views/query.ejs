@@ -26,9 +26,9 @@
   </div>
   <ul class="navbar">
     <a href="#" class="active">Home</a>
-    <a href="#" name=<%= user.userName %>>Following</a>
+    <a href="/following" name=<%= user.userName %>>Following</a>
     <a href="/saved-posts" class="savedPosts">Saved Posts</a>
-    <a class="profile" href= <%= "/" + user._id %> >Profile <i class="fa fa-user" aria-hidden="true"></i></a>
+    <a class="profile" href= <%= "/prof/" + user._id %> >Profile <i class="fa fa-user" aria-hidden="true"></i></a>
     <a href="/logout" class="logout">Logout ➡</a>
   </ul>
   <div class="side">
@@ -45,10 +45,10 @@
           <div class="matchedUsers"></div>
         </div>
         <a href="#" class="page pages">Home</a>
-        <a class="following pages" href="#" name=<%= user.userName %>>Following</a>
+        <a class="following pages" href="/following" name=<%= user.userName %>>Following</a>
         <a class="pages postQue" name=<%= user.userName %> >Post a question</a>
         <a href="/saved-posts" class="savedPosts pages">Saved Posts</a>
-        <a class="profile pages" href= <%= "/" + user._id %> >Profile <i class="fa fa-user" aria-hidden="true"></i></a>
+        <a class="profile pages" href= <%= "/prof/" + user._id %> >Profile <i class="fa fa-user" aria-hidden="true"></i></a>
         <a href="/logout" class="logout pages">Logout ➡</a>
       </div>
     </div>
@@ -85,7 +85,7 @@
           <buton class="answerQuery" href="/answerQuery" name=<%= queries[i]._id %> >Answer <i class="fa fa-pencil" aria-hidden="true"></i></button>
         </div>
         <div class="answers">
-          <% for(var j = 0; j < queries[i].answers.length; j++ ) { %>
+          <% for(var j = queries[i].answers.length - 1; j >= 0; j-- ) { %>
           <div class="answer">
             <p> <%= queries[i].answers[j].answer %> </p>
             <div class="likep" name= <%= queries[i]._id %> >
@@ -106,9 +106,13 @@
           <% } %>
         </div>
       </div>
-      <div class="comments">
+      <!-- <div class="comments">
         <h1>Comments</h1>
-      </div>
+        <div class="postCmnt">
+          <textarea class="newComment" placeholder="Enter comment..."></textarea>
+          <button class="commentButton">Post</button>
+        </div>
+      </div> -->
     </div>
     <% } %>
   </div>

@@ -21,12 +21,13 @@ document.querySelector(".fa-pencil-square-o").addEventListener("click", function
   };
   console.log("req: " + req.mail);
   $.post("/answers", req, function(res, status) {
+    const div = document.createElement("div");
+    document.querySelector(".answers").appendChild(div);
           if(res.answers.length == 0){
-             document.querySelector(".answers").innerHTML = "<h1>None</h1>";
+             document.querySelector(".answers div").innerHTML = "<h1>None</h1>";
+             document.querySelector(".answers div").classList.add("empty");
           }else{
             for (var k = 0; k < res.answers.length; k++) {
-              const div = document.createElement("div");
-              document.querySelector(".answers").appendChild(div);
               const html = "<div class='answer'><div class='ans'>" + res.answers[k].answer + "</div><div class='likes'>" +  "<i class='fa fa-heart' aria-hidden='true'></i>" + res.answers[k].likes + "</div></div>";
               document.querySelector(".answers div").innerHTML += html;
             }
@@ -34,10 +35,23 @@ document.querySelector(".fa-pencil-square-o").addEventListener("click", function
   });
 });
 
+// queries section
+if(document.querySelector(".queries").innerHTML === "None"){
+     document.querySelector(".queries").classList.add("empty");
+}
+
+
 // changing avatar
 document.querySelector(".changeAvatar button").addEventListener("click", function(){
          document.querySelector(".avatars").classList.toggle("show");
 });
+
+// document.querySelector(".changeAvatar button").addEventListener("click", function(){
+//   const div = document.createElement("div");
+//   document.querySelector(".answers").appendChild(div);
+//   document.querySelector(".answers div").innerHTML = "<h1>None</h1>";
+//   document.querySelector(".answers div").classList.add("empty");
+// });
 
 var ques = document.querySelectorAll(".queries div");
 var queWinds = document.querySelectorAll(".queries .que");
@@ -58,6 +72,7 @@ document.querySelector(".userName button").addEventListener("click", function(){
          }
          $.post("/changeUser",req,function(res,status){
            if(res.changed == true){
+              document.querySelector(".details p:nth-child(1)").innerHTML = document.querySelector(".userName input").value;
               document.querySelector(".userName input").placeholder = "Changed to - " + document.querySelector(".userName input").value;
            }else{
              document.querySelector(".userName input").placeholder = "Failed.Try again";
@@ -113,3 +128,23 @@ document.querySelectorAll(".image img").forEach(img =>{
              });
          });
 })
+
+//followees
+document.querySelector(".fa-users").addEventListener("click", function(){
+  var userMail = document.querySelector(".details p:nth-child(2)").innerHTML.trim();
+  $.post("/getFollowees", { mail: userMail}, function(res,status){
+      if(res.done){
+         document.querySelector(".followees").innerHTML = res.tagString;
+      }
+  });
+});
+
+//followers
+document.querySelector(".fa-gratipay").addEventListener("click", function(){
+    var userMail = document.querySelector(".details p:nth-child(2)").innerHTML.trim();
+    $.post("/getFollowers", { mail: userMail}, function(res,status){
+        if(res.done){
+           document.querySelector(".followers").innerHTML = res.tagString;
+        }
+    });
+});

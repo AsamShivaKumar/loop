@@ -37,14 +37,14 @@ const userSchema = new mongoose.Schema({
       firstName: String,
       lastName: String,
       userName: String,
-      mail: String,
+      mail: { type: String },
       passHash: String,
       avatar: {type: Number, default: 6},
       active: Boolean,
-      following: [String],       // user names of the followees
-      followers: [String],       // followers' user names
-      queries: [mongoose.ObjectId],       // ids of the queries posted by the userID
-      saved: {type: [mongoose.ObjectId] ,default: []},          // ids of the queries saved by the user
+      following: { type: [String], default: [] },              // MailID of the followees
+      followers: { type: [String], default: [] },              // followers' MailIDs
+      queries: [mongoose.ObjectId],                            // ids of the queries posted by the userID
+      saved: {type: [mongoose.ObjectId] ,default: []},         // ids of the queries saved by the user
       likedPosts: {type: [mongoose.ObjectId] ,default: []}     // ids of the posts liked by the user
 });
 
@@ -69,6 +69,11 @@ const querySchema = new mongoose.Schema({
       answers: [answerSchema]   // array of answers
 });
 
+const commentSchema = new mongoose.Schema({
+      mail: String,         // user mail
+
+});
+
 const User = new mongoose.model("User",userSchema);
 const Token = new mongoose.model("Token",tokenSchema);
 const Answer = new mongoose.model("Answer",answerSchema);
@@ -77,7 +82,6 @@ const Query = new mongoose.model("Query",querySchema);
 // login page
 app.get("/", function(req,res){
   if(req.cookies.user){
-    console.log("Logged in!");
     res.redirect("/home");
   }else{
     res.render("lgin", {Message: ""});
@@ -116,28 +120,29 @@ app.post("/signUp", function(req,res){
     const mail = req.body.email;
     if(req.body.password != req.body.rePassword || mail.slice(-24) != "@student.nitandhra.ac.in"){
       res.render("signUp",{message: "Incorrect credentials"});
-    }
-
-    User.findOne({mail: req.body.email},function(err,user){
-         if(user != null) res.render("signUp",{message: "Email already exists!"});
-    });
-
-    bcrypt.hash(req.body.password,10,function(err,bHash){
-      const newUser = new User({
-            id: randString.generate(10),
-            firstName: req.body.firstName,
-            lastName: req.body.lastName,
-            userName: req.body.userName,
-            mail: req.body.email,
-            passHash: bHash,
-            active: false
+    }else{
+      User.findOne({mail: req.body.email},function(err,user){
+           if(user != null){
+              res.render("signUp",{message: "Email already exists!"});
+           }else{
+             bcrypt.hash(req.body.password,10,function(err,bHash){
+               const newUser = new User({
+                     firstName: req.body.firstName,
+                     lastName: req.body.lastName,
+                     userName: req.body.userName,
+                     mail: req.body.email,
+                     passHash: bHash,
+                     active: false
+               });
+               // console.log(newUser.passHash);
+                  newUser.save();
+                  sendMail(newUser._id,req.body.email);
+                  var action = "/auth/" + newUser._id;
+                  res.render("auth",{action: action});
+             });
+           }
       });
-      // console.log(newUser.passHash);
-         newUser.save();
-         sendMail(newUser._id,req.body.email);
-         var action = "/auth/" + newUser.id;
-         res.render("auth",{action: action});
-    });
+    }
 });
 
 function sendMail(userID,userMailID){
@@ -153,7 +158,6 @@ function sendMail(userID,userMailID){
         userID: userID,
         authCode: auth
   });
-  console.log(newToken.userID);
   newToken.save();
   transporter.sendMail(options);
 }
@@ -161,17 +165,22 @@ function sendMail(userID,userMailID){
 // authorization
 app.post("/auth/:userId",function(req,res){
     var userId = req.params.userId;
-    console.log(userId);
-    Token.find({userID: userId}, function(err, token){
-           console.log("Saved code: " + token.authCode);
-           console.log("Entered code: " + req.body.authCode);
+    Token.findOne({userID: userId}, function(err, token){
            if(token.authCode === req.body.authCode){
-              console.log("Successful!");
               Token.findOneAndDelete({userID: userId});
+              User.findOne({ _id: userId } ,function(err,user){
+                   console.log(user);
+                   if(err){
+                     console.log(err);
+                   }else{
+                     user.active = true;
+                     user.save();
+                   }
+              });
               res.render("lgin",{Message: "Successfully registered!"});
            }else{
               Token.findOneAndDelete({userID: userId});
-              User.findOneAndDelete({id: userId});
+              User.findOneAndDelete({_id: userId});
               res.render("signUp", {message: "SignUp falied. Try again!"});
            }
     });
@@ -180,7 +189,7 @@ app.post("/auth/:userId",function(req,res){
 // query Page
 app.get("/home",function(req,res){
     const avatar = "/images/avatars/" + req.cookies.user.avatar + ".png";
-    Query.find().limit(10).exec(function(err,posts){
+    Query.find().sort({ _id: -1 }).exec(function(err,posts){
          if(!err) res.render("query",{user: req.cookies.user, avatar: avatar, queries: posts});
     });
 });
@@ -322,17 +331,33 @@ app.get("/saved-posts", function(req,res){
     });
     const avatar = "/images/avatars/" + req.cookies.user.avatar + ".png";
 
-    Query.find( { _id: { $in: ids} } , function(err,sQueries){
-          if(!err) res.render("saved",{user: req.cookies.user, avatar: avatar, queries: sQueries});
+    Query.find( { _id: { $in: ids} } ).sort({ _id: -1 }).exec(function(err,sQueries){
+          var prf = "/prof/" + req.cookies.user._id;
+          console.log(prf);
+          if(!err) res.render("saved",{user: req.cookies.user, avatar: avatar, queries: sQueries, saved: 1, prof: prf });
     });
 });
 
 //profile page
-app.get("/:userId", function(req,res){
-    Query.find({mail: req.cookies.user.mail},function(err,ques){
-          if(err) console.log(err);
-          else res.render("profile", {user: req.cookies.user, queries: ques});
-    });
+app.get("/prof/:userId", function(req,res){
+
+    if(req.params.userId === req.cookies.user._id){
+      Query.find({mail: req.cookies.user.mail},function(err,ques){
+            if(err) console.log(err);
+            else res.render("profile", {user: req.cookies.user, queries: ques});
+      });
+    }else{
+      User.findOne({ _id: req.params.userId }, function(err,userObj){
+           if(err){
+             console.log(err);
+           }else{
+             Query.find({mail: userObj.mail},function(err,ques){
+                   if(err) console.log(err);
+                   else res.render("otherProfile", {user: userObj, queries: ques, preUser: req.cookies.user});
+             });
+           }
+      });
+    }
 });
 
 // answers sec in profile page
@@ -391,8 +416,131 @@ app.post("/changeAvatar", function(req,res){
            user.avatar = avt;
            user.save();
            res.cookie("user",user);
+           Query.find({ mail: user.mail}, function(err,ques){
+             ques.forEach( que =>{
+                  que.avatar = user.avatar;
+                  que.save();
+             });
+           });
+
+           Answer.find({ mail: user.mail }, function(err,answ){
+                  answ.forEach( ans =>{
+                       ans.avatar = user.avatar;
+                       ans.save();
+                  });
+           });
            res.send({ done: true });
          }
+    });
+});
+
+// follow-button
+app.post("/follow",function(req,res){
+    var flag = Number(req.body.flag);
+    var mail = req.body.userMail.trim();
+    User.findOne({ mail: req.cookies.user.mail }, function(err,user){
+         if(flag === 1){
+             if(!user.following){
+                user.following = [ mail ];
+             }else{
+                user.following.push(mail);
+             }
+             user.save();
+             res.cookie("user",user);
+             User.findOne({mail: mail}, function(err,us){
+                  if(err){
+                    console.log(err);
+                  }else{
+                    if(!us.followers){
+                      us.followers = [ user.mail ];
+                    }else{
+                      us.followers.push(user.mail);
+                    }
+                    us.save();
+                  }
+             });
+             res.send({done: true});
+         }else{
+            for(var i = 0; i < user.following.length; i++){
+                if(user.following[i] === mail){
+                   user.following.splice(i,1);
+                   user.save();
+                   res.cookie("user",user);
+                   // console.log("Mail: " + mail);
+                   User.findOne({ mail: mail }, function(err,us){
+                        for(var j = 0; j < us.followers.length; j++){
+                            if(us.followers[j] === user.mail){
+                                  us.followers.splice(j,1);
+                                  us.save();
+                                  res.send({ done:true, len: us.followers.length });
+                            }
+                        }
+                   });
+                }
+            }
+         }
+    });
+});
+
+// returning followees
+app.post("/getFollowees", function(req,res){
+    if(req.body.mail === req.cookies.user.mail){
+       var ret = "";
+       if(req.cookies.user.following.length === 0){
+         res.send( { done: false });
+       }else{
+         var ret = "";
+         req.cookies.user.following.forEach( a => { ret += "<div class='usersFollowing'>" + a + "</div>"});
+         res.send({done: true, tagString: ret});
+       }
+    }else{
+        User.findOne({ mail: req.body.mail }, function(err,user){
+          var ret = "";
+          if(user.following.length === 0){
+            console.log(user);
+            res.send({ done: false });
+          }else{
+            var ret = "";
+            user.following.forEach( a => { ret += "<div class='usersFollowing'>" + a + "</div>"});
+            res.send({done: true, tagString: ret});
+          }
+        });
+    }
+});
+
+// followers
+app.post("/getFollowers", function(req,res){
+    if(req.body.mail === req.cookies.user.mail){
+       var ret = "";
+       if(req.cookies.user.followers.length === 0){
+         res.send({ done: false });
+       }else{
+         var ret = "";
+         req.cookies.user.followers.forEach( a => { ret += "<div class='usersFollowing'>" + a + "</div>"});
+         res.send({done: true, tagString: ret});
+       }
+    }else{
+      User.findOne({ mail: req.body.mail }, function(err,user){
+        var ret = "";
+        console.log(user);
+        if(user.followers.length === 0){
+
+          res.send( { done: false });
+        }else{
+          var ret = "";
+          user.followers.forEach( a => { ret += "<div class='usersFollowing'>" + a + "</div>"});
+          res.send({done: true, tagString: ret});
+        }
+      });
+    }
+});
+
+app.get("/following",function(req,res){
+    var mails = req.cookies.user.following;
+
+    const avatar = "/images/avatars/" + req.cookies.user.avatar + ".png";
+    Query.find({ mail: { $in: mails }}).sort( { _id: -1 }).exec(function(err,fQueries){
+      if(!err) res.render("saved",{user: req.cookies.user, avatar: avatar, queries: fQueries, saved: 0 });
     });
 });
 
@@ -404,8 +552,20 @@ function escapeRegex(regex) {
 app.post("/search", function(req,res){
     const reg = new RegExp(escapeRegex(req.body.user),"gi");
     User.find({ userName: reg}, function(err,userObjs){
-         if(err) console.log(err);
-         else res.send({ users: userObjs});
+         if(err) {
+           console.log(err);
+         }else if(userObjs.length != 0) {
+           res.send({ users: userObjs});
+         }else{
+           User.find({ mail: reg}, function(err, userObjs){
+             if(err) {
+               console.log(err);
+             }else{
+               res.send({ users: userObjs});
+               sent = true;
+             }
+           });
+         }
     });
 });
 
