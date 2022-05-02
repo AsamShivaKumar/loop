@@ -12,7 +12,8 @@
   <link href="https://fonts.googleapis.com/css2?family=Righteous&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Genos:wght@300&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Padauk&display=swap" rel="stylesheet">
-  <link href="/css/profile.css" rel="stylesheet" type="text/css" />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@200&display=swap" rel="stylesheet">
+  <link href="/css/otherProfile.css" rel="stylesheet" type="text/css" />
   <link href="/images/icon.png" rel="icon" />
 </head>
 
@@ -27,18 +28,34 @@
   <div class="details">
     <p> <%= user.userName %> </p>
     <p> <%= user.mail %> </p>
-  </div>
+    <div class="follow">
+      <p> <%= user.following.length + " Followees" %> </p>
+      <p> <%= user.followers.length + " Followers" %> </p>
+    </div>
 
+    <% var j = 0; %>
+    <% for( var i = 0; i < preUser.following.length; i++ ) { %>
+    <%      if( preUser.following[i] === user.mail ){ %>
+    <%          j = 1;break; %>
+    <% } %>
+    <% } %>
+    <% if( j == 1){ %>
+        <button class="followButton">Following</button>
+    <% }else{ %>
+        <button class="followButton">Follow</button>
+    <% } %>
+  </div>
   <div class="container">
         <div class="nav">
              <i class="fa fa-question-circle icons active" name = "queries" aria-hidden="true"></i>
              <i class="fa fa-pencil-square-o icons" aria-hidden="true" name="answers"></i>
              <i class="fa fa-users icons" aria-hidden="true" name="followees"></i>
+             <i class="fa fa-gratipay" aria-hidden="true" name="followers"></i>
         </div>
         <div class="content">
           <div class="queries display">
                <% if( queries.length == 0) { %>
-                   <h1 style="margin-left: calc( 50vw - 64px ); display: inline-block">None</h1>
+                   <!-- <h1>None</h1> -->
                <% }else { %>
                  <% for(var i = 0; i < queries.length; i++) { %>
                     <div name= <%= i %> > <%= queries[i].que %> </div>
@@ -60,7 +77,7 @@
           </div>
           <div class="answers"></div>
           <div class="followees"></div>
-          </div>
+          <div class="followers"></div>
         </div>
   </div>
   <div class="avatars">
@@ -70,33 +87,25 @@
       </div>
     <% } %>
   </div>
-  <div class="deleteAccount">
-    <button class="close"><i class="fa fa-times-circle" aria-hidden="true"></i></button>
-    <div class="pass">
-      Enter password:<br />
-      <input type="password"/>
-    </div>
-    <div class="buttons">
-      <button class="deleteButton">Delete</button>
-      <button class="cancel">Cancel</button>
-    </div>
-    <div class="message"></div>
-  </div>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-  <script type="text/javascript" src="/profile.js"></script>
+  <script type="text/javascript" src="/otherProfile.js"></script>
   <script type="text/javascript">
-
   // event listener for followees section
   document.querySelector(".fa-users").addEventListener("click", function(){
            var div = document.querySelector(".followees");
            if( <%= user.following.length %> === 0){
               div.innerHTML = "<h1>None </h1><i class='fa fa-user-times' aria-hidden='true'></i>"
-              div.classList.add("none");
-              div.classList.remove("exist");
-           }else{
-             div.classList.remove("none");
-             div.classList.add("exist");
            }
+  });
+
+  //event listener for followers section
+  document.querySelector(".fa-gratipay").addEventListener("click" ,function(evt){
+    var div = document.querySelector(".followers");
+    if( <%= user.followers.length %> === 0){
+       div.innerHTML = "<h1>None </h1><i class='fa fa-user-times' aria-hidden='true'></i>"
+    }else{
+       /// to be written -------------------------------------------------------------
+    }
   });
   </script>
 </body>

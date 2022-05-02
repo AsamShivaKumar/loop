@@ -30,7 +30,7 @@ body{
 .queryPost{
   display: flex;
   flex-direction: column;
-  width: calc(55vw + 250px);
+  width: calc(55vw  + 20px);
   margin: 50px 0 0 320px;
   box-shadow: 10px 10px 30px #4C0070;
   overflow-x: hidden;
@@ -155,9 +155,8 @@ body{
   text-align: center;
   font-size: 1.2rem;
   color: #524A4E;
+  display: hidden;
 }
-
-
 
 .answer::after{
   content: "";
@@ -252,6 +251,33 @@ textarea{
      transform: rotate(-45deg);
 }
 
+.newComment{
+    font-size: 1rem;
+    height: 20px;
+    padding: 0;
+    background-color: #FFCDDD;
+    border: 0;
+    width: 150px;
+    border-bottom: 2px solid black;
+    color: #8946A6;
+}
+
+.postCmnt{
+  display: flex;
+  position: relative;
+  left: 25.5px;
+}
+.newComment:focus{
+    outline: 0;
+}
+
+.commentButton{
+   padding: 0 10px;
+   border: 0;
+   border-radius: 3px;
+   cursor: pointer;
+}
+
 @media only screen and (max-width: 1300px){
        .sideBar{
          left: -100%;
@@ -284,6 +310,12 @@ textarea{
        }
        .comments{
          padding: 10px;
+       }
+       .postCmnt{
+         left: 0;
+       }
+       .newComment{
+         width: 75vw;
        }
 }
 

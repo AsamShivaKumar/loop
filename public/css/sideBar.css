@@ -86,6 +86,7 @@
   box-shadow: 1px 5px 10px black;
   z-index: 2;
   transition: all 0.4s;
+position: fixed;
 }
 
 .sideBarButton.click{
@@ -158,6 +159,10 @@
   cursor: pointer;
   padding-bottom: 10px;
   transition: all 1s;
+}
+
+.matchedUsers a{
+  text-decoration: none;
 }
 
 .searchedUser::nth-child(1){
