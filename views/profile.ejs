@@ -46,8 +46,12 @@
                <% if( queries.length == 0) { %>
                    <!-- <h1>None</h1> -->
                <% }else { %>
-                 <% for(var i = 0; i < queries.length; i++) { %>
-                    <div class="questio" name= <%= queries[i]._id %> > <%= queries[i].que %> </div>
+                 <% for(var i = queries.length-1; i >= 0; i--) { %>
+                    <div class="queDiv">
+                      <div class="questio"> <%= queries[i].que %> </div>
+                      <i class="fa fa-pencil" aria-hidden="true" name= <%= queries[i]._id %>  ind= <%= i %> ></i>
+                      <i class="fa fa-trash-o" aria-hidden="true" name= <%= queries[i]._id %> ></i>
+                    </div>
                  <% } %>
                <% } %>
           </div>
@@ -79,7 +83,7 @@
   <div class="deleteAccount">
     <button class="close"><i class="fa fa-times-circle" aria-hidden="true"></i></button>
     <div class="pass">
-      Enter password:<br />
+      <span>Enter password:</span><br />
       <input type="password"/>
     </div>
     <div class="buttons">
@@ -88,9 +92,14 @@
     </div>
     <div class="message"></div>
   </div>
-  <!-- <div class="queryDiv">
+  <div class="editQuery">
     <button class="close"><i class="fa fa-times-circle" aria-hidden="true"></i></button>
-  </div> -->
+    <textarea class="queryEdit"></textarea>
+    <div class="editBtns">
+      <button class="edit">Edit</button>
+      <button class="editCancel">Cancel</button>
+    </div>
+  </div>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   <script type="text/javascript" src="/profile.js"></script>
   <script type="text/javascript">

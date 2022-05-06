@@ -204,7 +204,7 @@ app.get("/home",function(req,res){
            }
       });
     }else{
-       res.render("lgin",{Message: ""}); 
+       res.render("lgin",{Message: ""});
     }
 
 });
@@ -348,7 +348,6 @@ app.get("/saved-posts", function(req,res){
 
     Query.find( { _id: { $in: ids} } ).sort({ _id: -1 }).exec(function(err,sQueries){
           var prf = "/prof/" + req.cookies.user._id;
-          console.log(prf);
           if(!err) res.render("saved",{user: req.cookies.user, avatar: avatar, queries: sQueries, saved: 1, prof: prf });
     });
 });
@@ -578,8 +577,43 @@ app.post("/search", function(req,res){
     });
 });
 
-// sending a query
+//deleting a query
+app.post("/deleteQuery", function(req,res){
+  bcrypt.compare(req.body.password, req.cookies.user.passHash, function(err,resul){
+         if(err){
+           console.log(err);
+         }else if(resul){
+           Query.deleteOne( { _id: req.body.queId }, function(err,result){
+                 if(err){
+                   console.log(err);
+                 }else{
+                   Query.find({mail: req.cookies.user.mail},function(err,ques){
+                         if(err) console.log(err);
+                         else res.send({queries: ques});
+                   });
+                 }
+           });
+         }else{
+            res.send({ done: false });
+         }
+  });
+});
 
+app.post("/editQuery", function(req,res){
+
+    Query.findOne( { _id: req.body.queId }, function(err,ques){
+          if(err){
+            console.log(err);
+            res.send({done: false});
+          }else{
+            ques.que = req.body.newQuery;
+            ques.save();
+            res.send({done: true});
+          }
+    });
+});
+
+// sending a query
 app.post("/getQue", function(req,res){
 
     Query.findOne({ _id: req.body.queId }, function(err,que){
@@ -589,7 +623,6 @@ app.post("/getQue", function(req,res){
             res.send({que: que});
           }
     });
-
 });
 
 let port = process.env.PORT;

@@ -172,20 +172,32 @@ body{
   font-size: 2rem;
 }
 
-.queries div{
-  border-radius: 5px;
+.questio{
   font-size: 1.5rem;
-  border: 2px solid black;
   font-family: 'Oxygen', sans-serif;
   padding: 10px;
-  background-color: #FBD6D2;
   color: #1A132F;
+  width: 75vw;
   white-space: pre-wrap;
+  word-break: break-all;
 }
 
-.queries div:hover{
-  background-color: #F3E9DD;
+.queDiv{
+  display: flex;
+    background-color: #FBD6D2;
+    border: 2px solid black;
+    border-radius: 5px;
+}
+
+.queDiv i{
+  font-size: 2rem;
+  margin-top: 10px;
+  padding: 0 10px;
   cursor: pointer;
+}
+
+.queDiv i:hover{
+    color: #A63EC5;
 }
 
 .query{
@@ -215,11 +227,6 @@ body{
 }
 
 /* queries */
-
-.questio{
-  white-space: pre-wrap;
-  text-align: left;
-}
 
 .avatar{
   border-radius: 100%;
@@ -449,7 +456,7 @@ body{
   display: flex;
 }
 
-.buttons button{
+.buttons button, .editBtns button{
   font-size: 1rem;
   border: 0;
   color: white;
@@ -461,7 +468,7 @@ body{
   border: 2px solid #04293A;
 }
 
-.buttons button:hover{
+.buttons button:hover,.editBtns button:hover{
   color: #041C32;
   background-color: white;
 }
@@ -515,6 +522,74 @@ body{
   text-align: center;
   margin: 5px 0;
   font-family: 'Nunito',sans-serif;
+}
+
+.openEdit{
+   display: flex !important;
+   flex-direction: column;
+   align-items: center;
+}
+
+.editQuery{
+  position: absolute;
+  width: 700px;
+  height: 300px;
+  border-radius: 5px;
+  background-color: white;
+  z-index: 2;
+  left: calc(50vw - 350px);
+  top: calc(50vh - 150px);
+  position: fixed;
+  transition: all 1s;
+  display: none;
+}
+
+.queryEdit{
+  margin-top: 50px;
+  width: 650px;
+  height: 200px;
+  font-size: 1.2rem;
+  border: 1px solid black;
+  white-space: pre-wrap;
+}
+
+.editBtns{
+  display: flex;
+  justify-content: center;
+}
+
+.editBtns button{
+  font-size: 1rem;
+  border: 0;
+  margin-top: 5px;
+  color: white;
+  background-color: #04293A;
+  padding: 5px 10px;
+  width: 120px;
+  cursor: pointer;
+  transition: all 0.7s;
+  border: 2px solid #04293A;
+}
+
+.edit{
+  margin-right: 2px;
+  border-radius: 5px 0 0 5px;
+  padding: 2px 0;
+}
+
+.editCancel{
+  border-radius: 0 5px 5px 0;
+}
+
+@media only screen and (max-width: 770px){
+       .editQuery{
+          width: 80vw;
+          left: 10vw;
+       }
+       .queryEdit{
+         width: 75vw;
+         left: 12.5vw;
+       }
 }
 
 @media only screen and (max-width: 530px){
