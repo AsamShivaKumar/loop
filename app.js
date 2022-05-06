@@ -14,7 +14,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
 app.use(cookieParser());
 
-mongoose.connect("mongodb://localhost:27017/usersData");
+mongoose.connect("mongodb+srv://ask:loop2022@cluster0.pi81t.mongodb.net/usersData");
 // console.log(mongoose);
 
 //Setting up nodemailer to send auth code to the user for authentication --
@@ -54,11 +54,12 @@ const tokenSchema = new mongoose.Schema({
 });
 
 const answerSchema = new mongoose.Schema({
-      by: String,             // user name
-      mail: String,           //user MailID
-      avatar: Number,         //usre avatar
-      answer: String,         // answer
-      likes: Number,          // like-count
+      queId: mongoose.ObjectId, // question id
+      by: String,               // user name
+      mail: String,             //user MailID
+      avatar: Number,           //usre avatar
+      answer: String,           // answer
+      likes: Number,            // like-count
 });
 
 const querySchema = new mongoose.Schema({
@@ -66,12 +67,11 @@ const querySchema = new mongoose.Schema({
       mail: String,             // user MailID
       avatar: Number,
       que: String,              // question
-      answers: [answerSchema]   // array of answers
+      answers: [ answerSchema ],              // arrays of answers
 });
 
 const commentSchema = new mongoose.Schema({
       mail: String,         // user mail
-
 });
 
 const User = new mongoose.model("User",userSchema);
@@ -190,7 +190,16 @@ app.post("/auth/:userId",function(req,res){
 app.get("/home",function(req,res){
     const avatar = "/images/avatars/" + req.cookies.user.avatar + ".png";
     Query.find().sort({ _id: -1 }).exec(function(err,posts){
-         if(!err) res.render("query",{user: req.cookies.user, avatar: avatar, queries: posts});
+         if(!err){
+           posts.forEach( que => {
+                  Answer.find({ queId: que._id }).sort({ _id: -1 }).exec(function(error, answs){
+                         if(error) console.log(error);
+                         que.answers = answs;
+                         que.save();
+                  });
+           });
+           res.render("query",{user: req.cookies.user, avatar: avatar, queries: posts});
+         }
     });
 });
 
@@ -212,11 +221,11 @@ app.post("/newPost", function(req,res){
 app.post("/newAnswer", function(req,res){
      const queID = req.body.queID;
      const ans = req.body.newAnswer;
-
-     Query.findOne({_id: queID},function(err,query){
+     Query.findOne({ _id: queID},function(err,query){
            if(err) console.log(err);
            const user = req.cookies.user;
            const answer = new Answer({
+                 queId: query._id,
                  by: user.userName,
                  mail: user.mail,
                  avatar: user.avatar,
@@ -377,6 +386,22 @@ app.post("/changeUser", function(req,res){
          }else if(user){
            user.userName = req.body.userName;
            user.save();
+
+           Query.find( {mail: req.body.mail.trim()}, function(e,ques){
+                 if(e) console.log(e);
+                 ques.forEach( que =>{
+                      que.postedBy = req.body.userName;
+                      que.save();
+                 });
+           });
+
+           Answer.find( {mail: req.body.mail.trim()}, function(er, answers){
+                  if(er) console.log(er);
+                  answers.forEach( ans =>{
+                          ans.by = req.body.userName;
+                          ans.save();
+                  });
+           });
            res.cookie("user", user);
            res.send({ changed: true });
          }
@@ -412,7 +437,6 @@ app.post("/changeAvatar", function(req,res){
          if(err){
            console.log(err);
          }else{
-           console.log(user);
            user.avatar = avt;
            user.save();
            res.cookie("user",user);
@@ -484,55 +508,34 @@ app.post("/follow",function(req,res){
 
 // returning followees
 app.post("/getFollowees", function(req,res){
-    if(req.body.mail === req.cookies.user.mail){
-       var ret = "";
-       if(req.cookies.user.following.length === 0){
-         res.send( { done: false });
-       }else{
-         var ret = "";
-         req.cookies.user.following.forEach( a => { ret += "<div class='usersFollowing'>" + a + "</div>"});
-         res.send({done: true, tagString: ret});
-       }
-    }else{
         User.findOne({ mail: req.body.mail }, function(err,user){
           var ret = "";
           if(user.following.length === 0){
-            console.log(user);
-            res.send({ done: false });
+            if(req.cookies.user.mail === req.body.mail) res.cookie("user",user);
+            res.send({ done: false,len: 0});
           }else{
             var ret = "";
             user.following.forEach( a => { ret += "<div class='usersFollowing'>" + a + "</div>"});
-            res.send({done: true, tagString: ret});
+            if(req.cookies.user.mail === req.body.mail) res.cookie("user",user);
+            res.send({done: true, tagString: ret, len: user.following.length});
           }
         });
-    }
 });
 
 // followers
 app.post("/getFollowers", function(req,res){
-    if(req.body.mail === req.cookies.user.mail){
-       var ret = "";
-       if(req.cookies.user.followers.length === 0){
-         res.send({ done: false });
-       }else{
-         var ret = "";
-         req.cookies.user.followers.forEach( a => { ret += "<div class='usersFollowing'>" + a + "</div>"});
-         res.send({done: true, tagString: ret});
-       }
-    }else{
       User.findOne({ mail: req.body.mail }, function(err,user){
         var ret = "";
-        console.log(user);
         if(user.followers.length === 0){
-
-          res.send( { done: false });
+          if(req.cookies.user.mail === req.body.mail) res.cookie("user",user);
+          res.send( { done: false, len: 0 });
         }else{
           var ret = "";
           user.followers.forEach( a => { ret += "<div class='usersFollowing'>" + a + "</div>"});
-          res.send({done: true, tagString: ret});
+          if(req.cookies.user.mail === req.body.mail) res.cookie("user",user);
+          res.send({done: true, tagString: ret, len: user.followers.length});
         }
       });
-    }
 });
 
 app.get("/following",function(req,res){
@@ -567,6 +570,20 @@ app.post("/search", function(req,res){
            });
          }
     });
+});
+
+// sending a query
+
+app.post("/getQue", function(req,res){
+
+    Query.findOne({ _id: req.body.queId }, function(err,que){
+          if(err) {
+            console.log(err);
+          }else{
+            res.send({que: que});
+          }
+    });
+
 });
 
 app.listen("3000",function(){

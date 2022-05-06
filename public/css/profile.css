@@ -19,6 +19,7 @@ body{
   width: 100vw;
   position: relative;
   top: 25vh;
+  scroll-behavior: smooth;
 }
 
 .profile{
@@ -215,24 +216,9 @@ body{
 
 /* queries */
 
-.question{
+.questio{
   white-space: pre-wrap;
   text-align: left;
-}
-
-.que{
-  position: relative;
-  width: 55vw;
-  background-image: linear-gradient(to bottom,#FFCDDD,#EA99D5);
-  color: #79018C;
-  font-size: 1.4rem;
-  text-align: center;
-  padding: 10px 10px;
-}
-.postedBy{
-  display: flex;
-  flex-direction: row;
-  font-size: 1rem;
 }
 
 .avatar{
@@ -338,6 +324,7 @@ body{
     grid-template-columns: 1fr 1fr 1fr;
     width: 300px;
     box-shadow: 10px 20px 20px #A63EC5;
+    position: fixed;
 }
 
 .show{
@@ -528,6 +515,40 @@ body{
   text-align: center;
   margin: 5px 0;
   font-family: 'Nunito',sans-serif;
+}
+
+@media only screen and (max-width: 530px){
+       .nav{
+          width: 350px;
+          left: calc(50vw - 175px);
+          font-size: 1.7rem;
+          height: 50px;
+       }
+
+       .nav i:nth-child(1){
+         left: 20px;
+       }
+
+       .nav i:nth-child(2){
+         left: 60px;
+       }
+
+       .nav i:nth-child(3){
+         left: 100px;
+       }
+
+       .nav i:nth-child(4){
+         left: 140px;
+       }
+
+       .nav i:nth-child(5){
+         left: 180px;
+       }
+
+       .usersFollowing{
+         font-size: 1.2rem;
+         width: 320px;
+       }
 }
 
 /* scroll bar */

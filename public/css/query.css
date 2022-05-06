@@ -278,7 +278,7 @@ textarea{
    cursor: pointer;
 }
 
-@media only screen and (max-width: 1300px){
+@media only screen and (max-width: 800px){
        .sideBar{
          left: -100%;
          z-index: 1;
@@ -296,9 +296,7 @@ textarea{
        .sideBar.click{
          left: 0;
        }
-}
 
-@media only screen and (max-width: 771px){
        .queryPost{
          flex-direction: column;
          width: calc(80vw + 20px);
@@ -322,6 +320,51 @@ textarea{
 @media only screen and (max-height: 600px){
        .sideBar{
            overflow-y: scroll;
+       }
+}
+
+@media only screen and (max-width: 470px){
+
+       .answer p{
+            font-size: 1rem;
+       }
+
+       .likep .postedBy .avatar{
+             margin-top: 5px;
+             width: 40px;
+             height: 40px;
+       }
+
+       .likep .userData p{
+              font-size: 1rem;
+       }
+
+       .likep .userData p:nth-child(2){
+               height: 20px;
+               position: relative;
+       }
+}
+
+@media only screen and (max-width: 450px){
+
+
+       .likep{
+         flex-direction: column;
+       }
+
+       .likep .postedBy{
+          left: -20px;
+          margin-left: 20px;
+       }
+
+       .likeDiv{
+         position: relative;
+         left: -140px;
+         margin-left: 20px;
+       }
+
+       .answer p{
+         /* margin-left: 20px; */
        }
 }
 
