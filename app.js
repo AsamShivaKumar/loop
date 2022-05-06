@@ -14,7 +14,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
 app.use(cookieParser());
 
-mongoose.connect("mongodb+srv://ask:" + process.env.ATLAS_PASS + "@cluster0.pi81t.mongodb.net/usersData");
+mongoose.connect("mongodb+srv://ask:loop2022@cluster0.pi81t.mongodb.net/usersData");
 // console.log(mongoose);
 
 //Setting up nodemailer to send auth code to the user for authentication --
