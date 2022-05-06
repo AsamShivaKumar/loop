@@ -96,74 +96,254 @@ input::placeholder{
   border-radius: 100%;
   position: absolute;
   z-index: -1;
+  transition: all 1s;
 }
 
 .circle:nth-child(1){
-  width: 378px;
-  height: 378px;
+  width: 20rem;
+  height: 20rem;
   left: 0;
   top: 45%;
 }
 
 .circle:nth-child(2){
-  width: 255px;
-  height: 255px;
+  width: 15rem;
+  height: 15rem;
   left: -5%;
   top: -3%;
 }
 
 .circle:nth-child(3){
-  width: 45px;
-  height: 45px;
+  width: 3rem;
+  height: 3rem;
   left: 15%;
   top: 8%;
 }
 
 .circle:nth-child(4){
-  width: 148px;
-  height: 148px;
+  width: 10rem;
+  height: 10rem;
   left: 30%;
   top: 1%;
 }
 
 .circle:nth-child(5){
-  width: 311px;
-  height: 311px;
+  width: 17rem;
+  height: 17rem;
   left: 50%;
   top: -3%;
 }
 
 .circle:nth-child(6){
-  width: 273px;
-  height: 273px;
+  width: 18rem;
+  height: 18rem;
   right: -4%;
   top: -3%;
 }
 
 .circle:nth-child(7){
-  width: 176px;
-  height: 164px;
+  width: 10rem;
+  height: 10rem;
   left: 44%;
   top: 43%;
 }
 
 .circle:nth-child(8){
-  width: 218px;
-  height: 218px;
+  width: 13rem;
+  height: 13rem;
   left: 40%;
   bottom: -3%;
 }
 
 .circle:nth-child(9){
-  width: 130px;
-  height: 130px;
+  width: 8rem;
+  height: 8rem;
   left: 70%;
   bottom: 6%;
 }
 
 .circle:nth-child(10){
-  width: 34px;
-  height: 34px;
+  width: 4rem;
+  height: 4rem;
   right: 5%;
   bottom: 5%;
+}
+
+@media only screen and (max-width: 1200px){
+
+       .circle:nth-child(1){
+         width: 15rem;
+         height: 15rem;
+       }
+
+       .circle:nth-child(2){
+         width: 10rem;
+         height: 10rem;
+       }
+
+       .circle:nth-child(4){
+         width: 7rem;
+         height: 7rem;
+       }
+
+       .circle:nth-child(6){
+         width: 13rem;
+         height: 13rem;
+       }
+
+       .circle:nth-child(7){
+         width: 6rem;
+         height: 6rem;
+       }
+
+       .circle:nth-child(8){
+         width: 10rem;
+         height: 10rem;
+       }
+}
+
+@media only screen and (max-width: 920px){
+
+       .title h1{
+         font-size: 7rem;
+       }
+
+       .title h2{
+          font-size: 3rem;
+       }
+
+       .circle:nth-child(6){
+          width: 10rem;
+          height: 10rem;
+       }
+
+       .circle:nth-child(5){
+         width: 13rem;
+         height: 13rem;
+       }
+
+       input{
+         --input-font: 1rem;
+         width: 220px;
+         height: 2.5rem;
+       }
+
+       .newAccount button{
+         font-size: 1.1rem;
+         height: 35px;
+       }
+}
+
+@media only screen and (max-width: 780px){
+
+       .circle:nth-child(3){
+               width: 1rem;
+               height: 1rem;
+               left: 20%;
+       }
+
+       .circle:nth-child(10){
+              right: 2%;
+              width: 3rem;
+              height: 3rem;
+       }
+
+       .circle:nth-child(5){
+              width: 10rem;
+              height: 10rem;
+       }
+
+       .circle:nth-child(6){
+              width: 8rem;
+              height: 8rem;
+       }
+
+}
+
+
+@media only screen and (max-height: 585px){
+
+    body{
+      overflow: visible;
+    }
+
+    .title h1{
+      font-size: 7rem;
+    }
+
+    .title h2{
+       font-size: 3rem;
+    }
+
+    input{
+      --input-font: 1rem;
+      width: 220px;
+      height: 2.5rem;
+    }
+
+    .newAccount button{
+      font-size: 1.1rem;
+      height: 35px;
+    }
+}
+
+@media only screen and (max-height: 420px){
+
+       .circle:nth-child(8){
+              width: 7rem;
+              height: 7rem;
+       }
+
+       .newAccount{
+           top: 10%;
+       }
+
+       .title h1{
+          margin-bottom: 0;
+       }
+
+       .title h2{
+           margin-top: 20px;
+           font-size: 2rem;
+       }
+}
+
+@media only screen and (max-height: 405px){
+
+       .newAccount{
+         top: 5%;
+       }
+
+       input{
+         --input-font: .8rem;
+         width: 200px;
+         height: 2rem;
+       }
+
+       .newAccount button{
+         font-size: 1rem;
+         height: 30px;
+       }
+
+}
+
+@media only screen and (max-width: 420px){
+
+       .circle{
+         display: none;
+       }
+
+       .newAccount{
+         left: 10%;
+         top: 40%;
+       }
+
+       .title h1{
+         font-size: 6rem;
+         margin-bottom: 0;
+       }
+
+       .title h2{
+         font-size: 1.6rem;
+       }
 }

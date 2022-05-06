@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width" />
-  <title>loop</title>
+  <title>loop | Profile</title>
   <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -47,20 +47,7 @@
                    <!-- <h1>None</h1> -->
                <% }else { %>
                  <% for(var i = 0; i < queries.length; i++) { %>
-                    <div name= <%= i %> > <%= queries[i].que %> </div>
-                    <div class="query hide">
-                         <i class="fa fa-times-circle" aria-hidden="true"></i>
-                         <div class="que">
-                           <div class="question"><%= queries[i].que %></div>
-                           <div class="postedBy">
-                             <img class="avatar" src=<%= "/images/avatars/" + queries[i].avatar + ".png" %> />
-                             <div class="userData">
-                               <p> <%= queries[i].postedBy %> </p>
-                               <p> <%= queries[i].mail %> </p>
-                             </div>
-                           </div>
-                           </div>
-                    </div>
+                    <div class="questio" name= <%= queries[i]._id %> > <%= queries[i].que %> </div>
                  <% } %>
                <% } %>
           </div>
@@ -101,6 +88,9 @@
     </div>
     <div class="message"></div>
   </div>
+  <!-- <div class="queryDiv">
+    <button class="close"><i class="fa fa-times-circle" aria-hidden="true"></i></button>
+  </div> -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   <script type="text/javascript" src="/profile.js"></script>
   <script type="text/javascript">

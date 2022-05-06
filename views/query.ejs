@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width" />
-  <title>loop</title>
+  <title>loop | Home</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap" rel="stylesheet">
@@ -96,11 +96,13 @@
                   <p> <%= queries[i].answers[j].mail %> </p>
                 </div>
               </div>
-              <% if(user.likedPosts.indexOf(queries[i].answers[j]._id.toString()) === -1){ %>
-                 <i class='fa fa-heart unliked' style="margin-right: 5px" name= <%= queries[i].answers[j]._id %> ></i><span class="numLikes"><%= queries[i].answers[j].likes %></span>
-              <% } else { %>
-                <i class='fa fa-heart liked' style="margin-right: 5px" name= <%= queries[i].answers[j]._id %> ></i><span class="numLikes"><%= queries[i].answers[j].likes %></span>
-              <% } %>
+              <div class="likeDiv">
+                <% if(user.likedPosts.indexOf(queries[i].answers[j]._id.toString()) === -1){ %>
+                   <i class='fa fa-heart unliked' style="margin-right: 5px" name= <%= queries[i].answers[j]._id %> ></i><span class="numLikes"><%= queries[i].answers[j].likes %></span>
+                <% } else { %>
+                  <i class='fa fa-heart liked' style="margin-right: 5px" name= <%= queries[i].answers[j]._id %> ></i><span class="numLikes"><%= queries[i].answers[j].likes %></span>
+                <% } %>
+              </div>
             </div>
           </div>
           <% } %>

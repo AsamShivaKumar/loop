@@ -22,6 +22,7 @@ document.querySelector(".fa-pencil-square-o").addEventListener("click", function
   console.log("req: " + req.mail);
   $.post("/answers", req, function(res, status) {
     const div = document.createElement("div");
+    document.querySelector(".answers").innerHTML = "";
     document.querySelector(".answers").appendChild(div);
           if(res.answers.length == 0){
              document.querySelector(".answers div").innerHTML = "<h1>None</h1>";
@@ -53,16 +54,16 @@ document.querySelector(".changeAvatar button").addEventListener("click", functio
 //   document.querySelector(".answers div").classList.add("empty");
 // });
 
-var ques = document.querySelectorAll(".queries div");
-var queWinds = document.querySelectorAll(".queries .que");
-for (let j = 0; j < ques.length; j++) {
-  ques[j].addEventListener("click", function(evt) {
-    let ind = Number(evt.target.getAttribute("name"));
-    console.log(ind);
-    queWinds[ind].classList.remove("hide");
-    queWinds[ind].style.display = "block";
-  });
-}
+// var ques = document.querySelectorAll(".queries div");
+// var queWinds = document.querySelectorAll(".queries .que");
+// for (let j = 0; j < ques.length; j++) {
+//   ques[j].addEventListener("click", function(evt) {
+//     let ind = Number(evt.target.getAttribute("name"));
+//     console.log(ind);
+//     queWinds[ind].classList.remove("hide");
+//     queWinds[ind].style.display = "block";
+//   });
+// }
 
 // request for changing user-name
 document.querySelector(".userName button").addEventListener("click", function(){
@@ -86,7 +87,7 @@ document.querySelector(".delete").addEventListener("click", function(){
   document.querySelector(".deleteAccount").classList.add("openDelete");
 });
 
-document.querySelector(".close").addEventListener("click",function(){
+document.querySelector(".deleteAccount .close").addEventListener("click",function(){
          document.querySelector(".deleteAccount").classList.remove("openDelete");
 });
 
@@ -132,9 +133,12 @@ document.querySelectorAll(".image img").forEach(img =>{
 //followees
 document.querySelector(".fa-users").addEventListener("click", function(){
   var userMail = document.querySelector(".details p:nth-child(2)").innerHTML.trim();
-  $.post("/getFollowees", { mail: userMail}, function(res,status){
+  $.post("/getFollowees", { mail: userMail }, function(res,status){
       if(res.done){
+         document.querySelector(".follow p:nth-child(1)").innerHTML = res.len + " Followees";
          document.querySelector(".followees").innerHTML = res.tagString;
+      }else{
+        document.querySelector(".follow p:nth-child(1)").innerHTML = "0 Followees";
       }
   });
 });
@@ -144,7 +148,42 @@ document.querySelector(".fa-gratipay").addEventListener("click", function(){
     var userMail = document.querySelector(".details p:nth-child(2)").innerHTML.trim();
     $.post("/getFollowers", { mail: userMail}, function(res,status){
         if(res.done){
-           document.querySelector(".followers").innerHTML = res.tagString;
+          document.querySelector(".follow p:nth-child(2)").innerHTML = res.len + " Followers";
+          document.querySelector(".followers").innerHTML = res.tagString;
+        }else{
+          document.querySelector(".follow p:nth-child(2)").innerHTML = "0 Followers";
         }
     });
 });
+
+// displaying and closing queryDiv
+//
+// document.querySelectorAll(".questio").forEach( que => {
+//          que.addEventListener("click", function(evt){
+//              var req = {
+//                  queId: evt.target.getAttribute("name")
+//              }
+//              console.log(req);
+//              $.post("/getQue",req, function(res,status){
+//                    var html = "";
+//                    html += "<button class='close'><i class='fa fa-times-circle' aria-hidden='true'></i></button>";
+//                    html += "<div class='queryPost'><div class='que'><div class='question'>" + res.que.que + "</div>"
+//                    html += "<div class='postedBy'><img class='avatar' src='/images/avatars/" + res.que.avatar + ".png' />";
+//                    html += "<div class='usersData'><p>" + res.que.postedBy + "</p><p>" + res.que.mail + "</p></div></div></div>";
+//                    html += "<div class='answers'>";
+//
+//                    res.que.answers.forEach( ans => {
+//                        html += "<div class='answer'><p>" + ans.answer + "</p>";
+//                        html += "<div class='likep'><div class='postedBy'><img class='avatar' src='/images/avatars/" + ans.avatar + ".png' /><div class='userData'><p>" + ans.by  + "</p><p>" +  ans.mail + "</p></div></div></div></div>";
+//                    });
+//                    html += "</div></div>";
+//                    document.querySelector(".queryDiv").innerHTML = html;
+//                    document.querySelector(".queryDiv").classList.add("openDiv");
+//              });
+//          });
+// });
+//
+// document.querySelector(".queryDiv .close").addEventListener("click", function(){
+//     alert("Clicked!");
+//     document.querySelector(".queryDiv").classList.remove("openDiv");
+// });
