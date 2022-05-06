@@ -188,19 +188,25 @@ app.post("/auth/:userId",function(req,res){
 
 // query Page
 app.get("/home",function(req,res){
-    const avatar = "/images/avatars/" + req.cookies.user.avatar + ".png";
-    Query.find().sort({ _id: -1 }).exec(function(err,posts){
-         if(!err){
-           posts.forEach( que => {
-                  Answer.find({ queId: que._id }).sort({ _id: -1 }).exec(function(error, answs){
-                         if(error) console.log(error);
-                         que.answers = answs;
-                         que.save();
-                  });
-           });
-           res.render("query",{user: req.cookies.user, avatar: avatar, queries: posts});
-         }
-    });
+
+    if(req.cookies.user){
+      const avatar = "/images/avatars/" + req.cookies.user.avatar + ".png";
+      Query.find().sort({ _id: -1 }).exec(function(err,posts){
+           if(!err){
+             posts.forEach( que => {
+                    Answer.find({ queId: que._id }).sort({ _id: -1 }).exec(function(error, answs){
+                           if(error) console.log(error);
+                           que.answers = answs;
+                           que.save();
+                    });
+             });
+             res.render("query",{user: req.cookies.user, avatar: avatar, queries: posts});
+           }
+      });
+    }else{
+       res.render("lgin",{Message: ""}); 
+    }
+
 });
 
 //new query
