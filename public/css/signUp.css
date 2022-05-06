@@ -347,3 +347,20 @@ input::placeholder{
          font-size: 1.6rem;
        }
 }
+
+@media only screen and (max-height: 670px){
+
+      .newAccount{
+        top: 50%;
+      }
+      input{
+        --input-font: .6rem;
+        width: 200px;
+        height: 1.6rem;
+      }
+
+      .newAccount button{
+        font-size: .8rem;
+        height: 2rem;
+      }
+}
