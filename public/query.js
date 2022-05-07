@@ -5,8 +5,9 @@ document.querySelector(".sideBarButton").addEventListener("click", function() {
   var btn = document.querySelector(".sideBarButton");
   btn.classList.toggle("click");
 
-  if (btn.innerHTML == "<span>▶</span>") btn.innerHTML = "<span>◀</span>"
-  else btn.innerHTML = "<span>▶</span>"
+  document.querySelector(".sideBarButton span").classList.toggle("rotate");
+  // if (btn.innerHTML == "<span><img src='/images/arrow.png'/></span>") btn.innerHTML = "<span><img src='/images/arrow2.png'/></span>"
+  // else btn.innerHTML = "<span><img src='/images/arrow.png'/></span>"
 });
 
 //navbar

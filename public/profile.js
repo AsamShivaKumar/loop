@@ -47,6 +47,23 @@ document.querySelector(".changeAvatar button").addEventListener("click", functio
          document.querySelector(".avatars").classList.toggle("show");
 });
 
+// changing the avatar
+document.querySelectorAll(".image img").forEach(img =>{
+         img.addEventListener("click", function(evt){
+             var req = {
+               avt: evt.target.getAttribute("title")
+             };
+             $.post("/changeAvatar",req,function(res,status){
+                  document.querySelector(".profile img").setAttribute("src","/images/avatars/" + req.avt + ".png");
+                  document.querySelector(".span").innerHTML = "Avatar changed!";
+                  document.querySelector(".avatars").classList.toggle("show");
+                  setTimeout(function(){
+                      document.querySelector(".span").innerHTML = "Change Avatar";
+                  },3000);
+             });
+         });
+});
+
 // document.querySelector(".changeAvatar button").addEventListener("click", function(){
 //   const div = document.createElement("div");
 //   document.querySelector(".answers").appendChild(div);
@@ -82,8 +99,9 @@ document.querySelector(".userName button").addEventListener("click", function(){
          });
 });
 
-//deleting account
+//deleting account and query
 document.querySelector(".delete").addEventListener("click", function(){
+  document.querySelector(".pass span").innerHTML = "Enter password:"
   document.querySelector(".deleteAccount").classList.add("openDelete");
 });
 
@@ -97,38 +115,45 @@ document.querySelector(".cancel").addEventListener("click",function(){
 
 document.querySelector(".deleteButton").addEventListener("click", function(){
 
-         var req = { password: document.querySelector(".pass input").value };
-         $.post("/deleteAccount",req,function(res,status){
+         if(document.querySelector(".pass span").innerHTML === "Enter password:"){
+             var req = { password: document.querySelector(".pass input").value };
+             $.post("/deleteAccount",req,function(res,status){
 
-           if(res.deleted === false){
-               document.querySelector(".message").textContent = "Check password and try again!";
-               setTimeout(function(){
-                 document.querySelector(".message").textContent = "";
-               }, 3000);
-           }else{
-               $('body').html(res);
-               document.querySelector("body").classList.add("deletedBody");
-           }
-         });
+             if(res.deleted === false){
+                 document.querySelector(".message").textContent = "Check password and try again!";
+                 setTimeout(function(){
+                   document.querySelector(".message").textContent = "";
+                 }, 3000);
+             }else{
+                 $('body').html(res);
+                 document.querySelector("body").classList.add("deletedBody");
+             }
+           });
+         }else{
+            var req = {
+                queId: document.querySelector(".pass span").getAttribute("name"),
+                password: document.querySelector(".pass input").value
+            }
+            console.log("Req: " + req);
+            $.post("/deleteQuery",req,function(res,status){
+                  if(res.done === false){
+                    document.querySelector(".message").textContent = "Check password and try again!";
+                    setTimeout(function(){
+                      document.querySelector(".message").textContent = "";
+                    }, 3000);
+                  }else{
+                    var html = "";
+                    res.queries.forEach( que =>{
+                         html = "<div class='queDiv'><div class='questio'>" + que.que + "</div><i class='fa fa-pencil' aria-hidden='true' name='" + que._id + "'></i><i class='fa fa-trash-o' aria-hidden='true' name='" + que._id + "'></i></div>" + html;
+                    });
+                    document.querySelector(".queries").innerHTML = html;
+                    document.querySelector(".deleteAccount").classList.remove("openDelete");
+                  }
+            });
+         }
+
 });
 // end of managing deletion of account!
-
-// changing the avatar
-document.querySelectorAll(".image img").forEach(img =>{
-         img.addEventListener("click", function(evt){
-             var req = {
-               avt: evt.target.getAttribute("title")
-             };
-             $.post("/changeAvatar",req,function(res,status){
-                  document.querySelector(".profile img").setAttribute("src","/images/avatars/" + req.avt + ".png");
-                  document.querySelector(".span").innerHTML = "Avatar changed!";
-                  document.querySelector(".avatars").classList.toggle("show");
-                  setTimeout(function(){
-                      document.querySelector(".span").innerHTML = "Change Avatar";
-                  },3000);
-             });
-         });
-})
 
 //followees
 document.querySelector(".fa-users").addEventListener("click", function(){
@@ -154,6 +179,44 @@ document.querySelector(".fa-gratipay").addEventListener("click", function(){
           document.querySelector(".follow p:nth-child(2)").innerHTML = "0 Followers";
         }
     });
+});
+
+// deleting query
+
+document.querySelector(".fa-trash-o").addEventListener("click", function(evt){
+         document.querySelector(".pass span").innerHTML = "Enter password to delete query:"
+         document.querySelector(".pass span").setAttribute("name", evt.target.getAttribute("name"));
+         document.querySelector(".deleteAccount").classList.add("openDelete");
+});
+
+// editing query
+document.querySelector(".editQuery .close").addEventListener("click",function(){
+         document.querySelector(".editQuery").classList.remove("openEdit");
+});
+
+document.querySelector(".editCancel").addEventListener("click",function(){
+         document.querySelector(".editQuery").classList.remove("openEdit");
+});
+
+document.querySelectorAll(".fa-pencil").forEach( pencil =>{
+         pencil.addEventListener("click", function(evt){
+                  var selec = ".queDiv:nth-last-child(" + (Number(evt.target.getAttribute("ind")) + 1) + ")";
+                  console.log(selec);
+                  document.querySelector(".queryEdit").value = document.querySelector(selec).childNodes[1].innerHTML.trim();
+                  document.querySelector(".edit").setAttribute("name", document.querySelector(selec).childNodes[3].getAttribute("name"));
+                  document.querySelector(".editQuery").classList.add("openEdit");
+         });
+});
+
+document.querySelector(".edit").addEventListener("click", function(evt){
+         var req = {
+             queId: evt.target.getAttribute("name"),
+             newQuery: document.querySelector(".queryEdit").value
+         }
+
+         $.post("/editQuery",req, function(res,status){
+              document.querySelector(".editQuery").classList.remove("openEdit");
+         });
 });
 
 // displaying and closing queryDiv

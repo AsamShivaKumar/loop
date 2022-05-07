@@ -21,6 +21,7 @@ document.querySelector(".fa-pencil-square-o").addEventListener("click", function
   console.log("req: " + req.mail);
   $.post("/answers", req, function(res, status) {
     const div = document.createElement("div");
+    document.querySelector(".answers").innerHTML = "";
     document.querySelector(".answers").appendChild(div);
           if(res.answers.length == 0){
              document.querySelector(".answers div").innerHTML = "<h1>None</h1>";

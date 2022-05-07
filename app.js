@@ -14,7 +14,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
 app.use(cookieParser());
 
-mongoose.connect("mongodb+srv://ask:loop2022@cluster0.pi81t.mongodb.net/usersData");
+mongoose.connect("mongodb+srv://ask:" + process.env.ATLAS_PASS + "@cluster0.pi81t.mongodb.net/usersData");
 // console.log(mongoose);
 
 //Setting up nodemailer to send auth code to the user for authentication --
@@ -188,19 +188,25 @@ app.post("/auth/:userId",function(req,res){
 
 // query Page
 app.get("/home",function(req,res){
-    const avatar = "/images/avatars/" + req.cookies.user.avatar + ".png";
-    Query.find().sort({ _id: -1 }).exec(function(err,posts){
-         if(!err){
-           posts.forEach( que => {
-                  Answer.find({ queId: que._id }).sort({ _id: -1 }).exec(function(error, answs){
-                         if(error) console.log(error);
-                         que.answers = answs;
-                         que.save();
-                  });
-           });
-           res.render("query",{user: req.cookies.user, avatar: avatar, queries: posts});
-         }
-    });
+
+    if(req.cookies.user){
+      const avatar = "/images/avatars/" + req.cookies.user.avatar + ".png";
+      Query.find().sort({ _id: -1 }).exec(function(err,posts){
+           if(!err){
+             posts.forEach( que => {
+                    Answer.find({ queId: que._id }).sort({ _id: -1 }).exec(function(error, answs){
+                           if(error) console.log(error);
+                           que.answers = answs;
+                           que.save();
+                    });
+             });
+             res.render("query",{user: req.cookies.user, avatar: avatar, queries: posts});
+           }
+      });
+    }else{
+       res.render("lgin",{Message: ""});
+    }
+
 });
 
 //new query
@@ -342,7 +348,6 @@ app.get("/saved-posts", function(req,res){
 
     Query.find( { _id: { $in: ids} } ).sort({ _id: -1 }).exec(function(err,sQueries){
           var prf = "/prof/" + req.cookies.user._id;
-          console.log(prf);
           if(!err) res.render("saved",{user: req.cookies.user, avatar: avatar, queries: sQueries, saved: 1, prof: prf });
     });
 });
@@ -572,8 +577,43 @@ app.post("/search", function(req,res){
     });
 });
 
-// sending a query
+//deleting a query
+app.post("/deleteQuery", function(req,res){
+  bcrypt.compare(req.body.password, req.cookies.user.passHash, function(err,resul){
+         if(err){
+           console.log(err);
+         }else if(resul){
+           Query.deleteOne( { _id: req.body.queId }, function(err,result){
+                 if(err){
+                   console.log(err);
+                 }else{
+                   Query.find({mail: req.cookies.user.mail},function(err,ques){
+                         if(err) console.log(err);
+                         else res.send({queries: ques});
+                   });
+                 }
+           });
+         }else{
+            res.send({ done: false });
+         }
+  });
+});
 
+app.post("/editQuery", function(req,res){
+
+    Query.findOne( { _id: req.body.queId }, function(err,ques){
+          if(err){
+            console.log(err);
+            res.send({done: false});
+          }else{
+            ques.que = req.body.newQuery;
+            ques.save();
+            res.send({done: true});
+          }
+    });
+});
+
+// sending a query
 app.post("/getQue", function(req,res){
 
     Query.findOne({ _id: req.body.queId }, function(err,que){
@@ -583,9 +623,10 @@ app.post("/getQue", function(req,res){
             res.send({que: que});
           }
     });
-
 });
 
-app.listen("3000",function(){
-  console.log("Server set up at route 3000!");
-});
+let port = process.env.PORT;
+if (port == null || port == "") {
+  port = 3000;
+}
+app.listen(port);

@@ -75,7 +75,7 @@
   border: 0;
   top: 47%;
   position: absolute;
-  height: 60px;
+  height: 55px;
   width: 35px;
   background-color: #8946A6;
   font-size: 2rem;
@@ -87,6 +87,9 @@
   z-index: 2;
   transition: all 0.4s;
 position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .sideBarButton.click{
@@ -95,6 +98,16 @@ position: fixed;
 
 .sideBarButton:hover{
   background-color: #7A0BC0;
+}
+
+.sideBarButton span{
+  margin-top: 8px;
+}
+
+.rotate{
+  transform: rotate(180deg);
+  padding-top: 14px;
+  padding-left: 10px;
 }
 
 /* search bar */
@@ -151,18 +164,19 @@ position: fixed;
 
 .searchedUser{
   display: flex;
-  font-size: 2rem;
+  font-size: 1.2rem;
   justify-content: left;
   align-items: center;
   border-radius: 5px;
   margin: 0 2px;
   cursor: pointer;
   padding-bottom: 10px;
-  transition: all 1s;
+  transition: all .7s;
 }
 
 .matchedUsers a{
   text-decoration: none;
+  color: black;
 }
 
 .searchedUser::nth-child(1){
@@ -175,6 +189,6 @@ position: fixed;
 }
 
 .searchedUser img{
-  margin: 10px 0 0 10px;
+  margin: 0;
   width: 50px;
 }
