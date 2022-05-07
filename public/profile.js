@@ -47,6 +47,23 @@ document.querySelector(".changeAvatar button").addEventListener("click", functio
          document.querySelector(".avatars").classList.toggle("show");
 });
 
+// changing the avatar
+document.querySelectorAll(".image img").forEach(img =>{
+         img.addEventListener("click", function(evt){
+             var req = {
+               avt: evt.target.getAttribute("title")
+             };
+             $.post("/changeAvatar",req,function(res,status){
+                  document.querySelector(".profile img").setAttribute("src","/images/avatars/" + req.avt + ".png");
+                  document.querySelector(".span").innerHTML = "Avatar changed!";
+                  document.querySelector(".avatars").classList.toggle("show");
+                  setTimeout(function(){
+                      document.querySelector(".span").innerHTML = "Change Avatar";
+                  },3000);
+             });
+         });
+});
+
 // document.querySelector(".changeAvatar button").addEventListener("click", function(){
 //   const div = document.createElement("div");
 //   document.querySelector(".answers").appendChild(div);
@@ -138,6 +155,32 @@ document.querySelector(".deleteButton").addEventListener("click", function(){
 });
 // end of managing deletion of account!
 
+//followees
+document.querySelector(".fa-users").addEventListener("click", function(){
+  var userMail = document.querySelector(".details p:nth-child(2)").innerHTML.trim();
+  $.post("/getFollowees", { mail: userMail }, function(res,status){
+      if(res.done){
+         document.querySelector(".follow p:nth-child(1)").innerHTML = res.len + " Followees";
+         document.querySelector(".followees").innerHTML = res.tagString;
+      }else{
+        document.querySelector(".follow p:nth-child(1)").innerHTML = "0 Followees";
+      }
+  });
+});
+
+//followers
+document.querySelector(".fa-gratipay").addEventListener("click", function(){
+    var userMail = document.querySelector(".details p:nth-child(2)").innerHTML.trim();
+    $.post("/getFollowers", { mail: userMail}, function(res,status){
+        if(res.done){
+          document.querySelector(".follow p:nth-child(2)").innerHTML = res.len + " Followers";
+          document.querySelector(".followers").innerHTML = res.tagString;
+        }else{
+          document.querySelector(".follow p:nth-child(2)").innerHTML = "0 Followers";
+        }
+    });
+});
+
 // deleting query
 
 document.querySelector(".fa-trash-o").addEventListener("click", function(evt){
@@ -174,49 +217,6 @@ document.querySelector(".edit").addEventListener("click", function(evt){
          $.post("/editQuery",req, function(res,status){
               document.querySelector(".editQuery").classList.remove("openEdit");
          });
-});
-
-// changing the avatar
-document.querySelectorAll(".image img").forEach(img =>{
-         img.addEventListener("click", function(evt){
-             var req = {
-               avt: evt.target.getAttribute("title")
-             };
-             $.post("/changeAvatar",req,function(res,status){
-                  document.querySelector(".profile img").setAttribute("src","/images/avatars/" + req.avt + ".png");
-                  document.querySelector(".span").innerHTML = "Avatar changed!";
-                  document.querySelector(".avatars").classList.toggle("show");
-                  setTimeout(function(){
-                      document.querySelector(".span").innerHTML = "Change Avatar";
-                  },3000);
-             });
-         });
-})
-
-//followees
-document.querySelector(".fa-users").addEventListener("click", function(){
-  var userMail = document.querySelector(".details p:nth-child(2)").innerHTML.trim();
-  $.post("/getFollowees", { mail: userMail }, function(res,status){
-      if(res.done){
-         document.querySelector(".follow p:nth-child(1)").innerHTML = res.len + " Followees";
-         document.querySelector(".followees").innerHTML = res.tagString;
-      }else{
-        document.querySelector(".follow p:nth-child(1)").innerHTML = "0 Followees";
-      }
-  });
-});
-
-//followers
-document.querySelector(".fa-gratipay").addEventListener("click", function(){
-    var userMail = document.querySelector(".details p:nth-child(2)").innerHTML.trim();
-    $.post("/getFollowers", { mail: userMail}, function(res,status){
-        if(res.done){
-          document.querySelector(".follow p:nth-child(2)").innerHTML = res.len + " Followers";
-          document.querySelector(".followers").innerHTML = res.tagString;
-        }else{
-          document.querySelector(".follow p:nth-child(2)").innerHTML = "0 Followers";
-        }
-    });
 });
 
 // displaying and closing queryDiv
