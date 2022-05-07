@@ -348,6 +348,17 @@ input::placeholder{
        }
 }
 
+@media only screen and (max-width: 680px){
+
+       .newAccount{
+         right: 0;
+       }
+
+       .title h2{
+         font-size: 2rem;
+       }
+}
+
 @media only screen and (max-height: 670px){
 
       .newAccount{
