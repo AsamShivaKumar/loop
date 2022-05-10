@@ -1,10 +1,9 @@
 // tracking the text entered into the search bar
+         const div = document.querySelector(".matchedUsers");
 document.querySelector(".searchBar input").addEventListener("input", function(evt){
          var req = { user: evt.target.value };
-         const div = document.querySelector(".matchedUsers");
-         if(evt.target.value !== ""){
+         if(evt.target.value.trim().length){
            $.post("/search", req, function(res,status){
-              console.log(res.users);
               div.classList.add("showUsers");
               var html = "";
               for(var i = 0; i < res.users.length; i++){
@@ -13,6 +12,13 @@ document.querySelector(".searchBar input").addEventListener("input", function(ev
               div.innerHTML = html;
            });
          }else{
+           div.innerHTML = "";
            div.classList.remove("showUsers");
          }
+});
+
+document.querySelector(".searchBar input").addEventListener("blur",function(){
+         this.value = "";
+         div.innerHTML = "";
+         div.classList.remove("showUsers");
 });
