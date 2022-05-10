@@ -106,10 +106,12 @@ document.querySelector(".delete").addEventListener("click", function(){
 });
 
 document.querySelector(".deleteAccount .close").addEventListener("click",function(){
+         document.querySelector(".pass input").value = "";
          document.querySelector(".deleteAccount").classList.remove("openDelete");
 });
 
 document.querySelector(".cancel").addEventListener("click",function(){
+         document.querySelector(".pass input").value = "";
          document.querySelector(".deleteAccount").classList.remove("openDelete");
 });
 
@@ -147,6 +149,7 @@ document.querySelector(".deleteButton").addEventListener("click", function(){
                          html = "<div class='queDiv'><div class='questio'>" + que.que + "</div><i class='fa fa-pencil' aria-hidden='true' name='" + que._id + "'></i><i class='fa fa-trash-o' aria-hidden='true' name='" + que._id + "'></i></div>" + html;
                     });
                     document.querySelector(".queries").innerHTML = html;
+                    document.querySelector(".pass input").value = "";
                     document.querySelector(".deleteAccount").classList.remove("openDelete");
                   }
             });
