@@ -18,7 +18,9 @@ document.querySelector(".searchBar input").addEventListener("input", function(ev
 });
 
 document.querySelector(".searchBar input").addEventListener("blur",function(){
-         this.value = "";
-         div.innerHTML = "";
-         div.classList.remove("showUsers");
+         if(document.querySelector(".searchBar input").value === ""){
+           this.value = "";
+           div.innerHTML = "";
+           div.classList.remove("showUsers");
+         }
 });
