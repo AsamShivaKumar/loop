@@ -272,7 +272,7 @@ input::placeholder{
     }
 
     .title h2{
-       font-size: 3rem;
+       font-size: 1rem !important;
     }
 
     input{
@@ -325,6 +325,11 @@ input::placeholder{
          height: 30px;
        }
 
+       .title h2{
+        margin-top: 20px;
+        font-size: 1rem;
+    }
+
 }
 
 @media only screen and (max-width: 420px){
@@ -346,6 +351,16 @@ input::placeholder{
        .title h2{
          font-size: 1.6rem;
        }
+}
+
+@media only screen and (max-height: 450px){
+    .title{
+      display: none;
+    }
+
+    .newAccount{
+      top: 30px !important;
+    }
 }
 
 @media only screen and (max-width: 680px){
